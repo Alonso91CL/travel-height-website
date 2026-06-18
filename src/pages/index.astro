@@ -1,11 +1,148 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Hero from "../components/Hero.astro";
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const bgImage = "/images/hero-bg.png";
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<BaseLayout title="Inicio | Travel Height Elevadores" currentPage="/">
+  <main>
+    <Hero
+      backgroundImage={bgImage}
+      gradientFrom="from-black/70"
+      gradientVia="via-black/40"
+      gradientTo="to-transparent"
+      minHeight="min-h-screen"
+      badge="LÍDERES EN INGENIERÍA VERTICAL"
+      badgeClass="bg-black/70 text-white rounded-full"
+      title="Elevamos los estándares de seguridad en Latinoamérica."
+      description="Expertos en ingeniería de elevación vertical con más de 15 años de experiencia. Garantizamos excelencia técnica, seguridad certificada y servicio 24/7 en toda la región."
+      primaryCta={{ text: "Solicitar Cotización", href: "/cotizacion/", class: "bg-black text-white hover:opacity-80" }}
+      secondaryCta={{ text: "Nuestros Servicios", href: "/servicios/", class: "border-outline-variant text-primary hover:border-electric-cyan bg-white/80 backdrop-blur-sm" }}
+    />
+
+    <!-- Trust Bar -->
+    <section class="bg-surface-container-low py-8 border-y border-outline-variant/30 reveal">
+      <div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-gutter text-center stagger">
+          <div>
+            <span class="font-headline-md text-headline-md text-primary">15+</span>
+            <p class="font-label-bold text-label-sm text-on-surface-variant uppercase mt-1">Años de Experiencia</p>
+          </div>
+          <div>
+            <span class="font-headline-md text-headline-md text-primary">500+</span>
+            <p class="font-label-bold text-label-sm text-on-surface-variant uppercase mt-1">Proyectos Realizados</p>
+          </div>
+          <div>
+            <span class="font-headline-md text-headline-md text-primary">24/7</span>
+            <p class="font-label-bold text-label-sm text-on-surface-variant uppercase mt-1">Soporte Técnico</p>
+          </div>
+          <div>
+            <span class="font-headline-md text-headline-md text-primary">NCh 440</span>
+            <p class="font-label-bold text-label-sm text-on-surface-variant uppercase mt-1">Certificación</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services Summary -->
+    <section class="px-margin-mobile md:px-margin-desktop py-section-padding reveal">
+      <div class="max-w-container-max mx-auto">
+        <div class="text-center mb-stack-lg">
+          <h2 class="font-headline-md text-headline-md text-primary">Soluciones Integrales</h2>
+          <p class="text-on-surface-variant font-body-md mt-2">Tecnología de punta para cada necesidad.</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-gutter stagger">
+          <div class="glass-card rounded-2xl p-8 ambient-shadow hover-lift">
+            <div class="w-12 h-12 bg-secondary-container rounded-xl flex items-center justify-center mb-4">
+              <span class="material-symbols-outlined text-primary">precision_manufacturing</span>
+            </div>
+            <h3 class="font-headline-sm text-headline-sm text-primary mb-3">Instalación</h3>
+            <p class="text-on-surface-variant font-body-md">Montaje profesional de equipos de última generación con ingeniería de precisión.</p>
+          </div>
+          <div class="glass-card rounded-2xl p-8 ambient-shadow hover-lift">
+            <div class="w-12 h-12 bg-secondary-container rounded-xl flex items-center justify-center mb-4">
+              <span class="material-symbols-outlined text-primary">build</span>
+            </div>
+            <h3 class="font-headline-sm text-headline-sm text-primary mb-3">Mantenimiento</h3>
+            <p class="text-on-surface-variant font-body-md">Programas preventivos y correctivos para asegurar la máxima disponibilidad.</p>
+          </div>
+          <div class="glass-card rounded-2xl p-8 ambient-shadow hover-lift">
+            <div class="w-12 h-12 bg-secondary-container rounded-xl flex items-center justify-center mb-4">
+              <span class="material-symbols-outlined text-primary">upgrade</span>
+            </div>
+            <h3 class="font-headline-sm text-headline-sm text-primary mb-3">Modernización</h3>
+            <p class="text-on-surface-variant font-body-md">Actualización tecnológica de equipos existentes para cumplir nuevas normativas.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Emergency Banner -->
+    <section class="bg-gradient-to-r from-[#8b0000] to-[#ba1a1a] px-margin-mobile md:px-margin-desktop py-12 reveal">
+      <div class="max-w-container-max mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+        <div class="text-white">
+          <span class="font-label-bold text-label-sm uppercase tracking-wider opacity-80">¿Ascensor Detenido?</span>
+          <h2 class="font-headline-md text-headline-md mt-1">Emergencia 24/7 — Respuesta Inmediata</h2>
+        </div>
+        <a href="/emergencias/" class="inline-flex items-center gap-2 bg-white text-[#ba1a1a] font-label-bold text-label-bold px-8 py-4 rounded-xl hover:opacity-90 transition-all hover-lift press">
+          <span class="material-symbols-outlined">call</span>
+          Solicitar Asistencia
+        </a>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="px-margin-mobile md:px-margin-desktop py-section-padding reveal">
+      <div class="max-w-container-max mx-auto grid md:grid-cols-2 gap-gutter">
+        <div class="space-y-stack-lg">
+          <h2 class="font-headline-md text-headline-md text-primary">Contáctenos</h2>
+          <p class="text-on-surface-variant font-body-md">Estamos listos para atender su proyecto.</p>
+          <div class="space-y-4">
+            <div class="flex items-center gap-4 p-4 bg-surface-container-low rounded-xl">
+              <span class="material-symbols-outlined text-electric-cyan">location_on</span>
+              <div>
+                <p class="font-label-bold text-label-sm text-on-surface-variant">Oficina Central</p>
+                <p class="font-body-md">Av. Apoquindo 4800, Las Condes</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-4 p-4 bg-surface-container-low rounded-xl">
+              <span class="material-symbols-outlined text-electric-cyan">call</span>
+              <div>
+                <p class="font-label-bold text-label-sm text-on-surface-variant">Teléfono</p>
+                <p class="font-body-md">+56 2 2123 4567</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-4 p-4 bg-surface-container-low rounded-xl">
+              <span class="material-symbols-outlined text-electric-cyan">mail</span>
+              <div>
+                <p class="font-label-bold text-label-sm text-on-surface-variant">Email</p>
+                <p class="font-body-md">contacto@travelheight.cl</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="bg-white rounded-2xl ambient-shadow p-8">
+          <form id="contact-form" class="space-y-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <input type="text" placeholder="Nombre" class="w-full p-4 bg-surface-container-low rounded-xl font-body-md outline-none focus:bg-white focus:ring-2 focus:ring-electric-cyan transition-all" />
+              <input type="text" placeholder="Empresa" class="w-full p-4 bg-surface-container-low rounded-xl font-body-md outline-none focus:bg-white focus:ring-2 focus:ring-electric-cyan transition-all" />
+            </div>
+            <input type="email" placeholder="Email" class="w-full p-4 bg-surface-container-low rounded-xl font-body-md outline-none focus:bg-white focus:ring-2 focus:ring-electric-cyan transition-all" />
+            <select class="w-full p-4 bg-surface-container-low rounded-xl font-body-md outline-none focus:bg-white focus:ring-2 focus:ring-electric-cyan transition-all">
+              <option>Tipo de Servicio</option>
+              <option>Instalación</option>
+              <option>Mantenimiento</option>
+              <option>Modernización</option>
+              <option>Emergencia</option>
+            </select>
+            <textarea placeholder="Mensaje" rows="4" class="w-full p-4 bg-surface-container-low rounded-xl font-body-md outline-none focus:bg-white focus:ring-2 focus:ring-electric-cyan transition-all"></textarea>
+            <button type="submit" class="w-full bg-black text-white font-label-bold text-label-bold py-4 rounded-xl hover:opacity-80 transition-all active:scale-95 press">
+              Enviar Mensaje
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+</BaseLayout>
