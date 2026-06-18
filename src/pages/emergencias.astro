@@ -1,0 +1,136 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Hero from "../components/Hero.astro";
+import StatsBar from "../components/StatsBar.astro";
+import StepCard from "../components/StepCard.astro";
+import FAQ from "../components/FAQ.astro";
+
+const controlCenterImg = "/images/control-center.png";
+const mapImg = "/images/map-santiago.png";
+---
+
+<BaseLayout title="Emergencias 24/7 | Travel Height" currentPage="/emergencias/">
+  <main>
+    <Hero
+      backgroundImage={controlCenterImg}
+      badgeHtml='<span class="status-dot w-2 h-2 bg-error rounded-full inline-block"></span>
+        <span class="font-label-bold text-label-sm uppercase tracking-wider">Centro de Emergencias Activo</span>'
+      badgeClass="bg-error-container text-on-error-container rounded-full animate-pulse"
+      title="Asistencia inmediata para tu seguridad."
+      description="Nuestro equipo técnico de élite está en guardia 24/7. Garantizamos un tiempo de respuesta menor a 120 minutos en toda la Región Metropolitana."
+      primaryCta={{ text: "Llamar a Emergencias", href: "tel:800123456", icon: "phone_in_talk", class: "emergency-btn-pulse flex items-center justify-center gap-3 bg-error text-white hover:bg-red-700 shadow-lg" }}
+      secondaryCta={{ text: "Soporte WhatsApp", href: "/cotizacion/", icon: "chat_bubble", class: "border-outline-variant text-primary hover:border-electric-cyan bg-white" }}
+    />
+
+    <StatsBar variant="emergency" />
+
+    <StepCard
+      title="¿Qué hacer en caso de atrapamiento?"
+      description="Siga estas instrucciones para una resolución segura y rápida."
+      steps={[
+        {
+          number: "01",
+          title: "Mantenga la Calma",
+          description:
+            "El aire circula libremente y los frenos de seguridad están activados mecánicamente. Respire hondo.",
+          icon: "psychology",
+        },
+        {
+          number: "02",
+          title: "Active la Alarma",
+          description:
+            "Presione el botón de campana o el intercomunicador por 3 segundos para alertar al conserje del edificio.",
+          icon: "notifications_active",
+        },
+        {
+          number: "03",
+          title: "Contacte Soporte",
+          description:
+            "Si no recibe respuesta, llame a nuestra línea directa 24/7. Nunca intente forzar las puertas.",
+          icon: "support_agent",
+        },
+      ]}
+    />
+
+    <FAQ
+      title="Preguntas Frecuentes"
+      description="Respuestas rápidas para situaciones de urgencia."
+      items={[
+        {
+          question: "¿Se puede acabar el aire dentro del ascensor?",
+          answer:
+            "No. Las cabinas están diseñadas con múltiples rejillas de ventilación pasiva que permiten la circulación constante de aire. Además, el ducto del ascensor actúa como una chimenea natural de aire fresco.",
+        },
+        {
+          question: "¿Qué pasa si hay un corte de luz?",
+          answer:
+            "Nuestros ascensores cuentan con sistemas de Rescate Automático (ARD) que llevan la cabina al piso más cercano y abren las puertas automáticamente usando baterías de respaldo.",
+        },
+        {
+          question: "¿Cuánto tiempo demoran en llegar?",
+          answer:
+            "Nuestro compromiso contractual es de máximo 120 minutos para emergencias críticas, aunque nuestro promedio actual en el Gran Santiago es de solo 34 minutos.",
+        },
+      ]}
+    />
+
+    <!-- Coverage Section -->
+    <section class="px-margin-mobile md:px-margin-desktop py-section-padding reveal">
+      <div class="max-w-container-max mx-auto">
+        <div class="grid md:grid-cols-12 gap-gutter items-center">
+          <div class="md:col-span-4 space-y-stack-md">
+            <h2 class="font-headline-md text-headline-md text-primary">
+              Cobertura Total
+            </h2>
+            <p class="text-on-surface-variant font-body-md">
+              Operamos en toda la Región Metropolitana con centros logísticos
+              estratégicos.
+            </p>
+            <ul class="space-y-4">
+              <li class="flex items-center gap-3 font-label-bold text-label-bold text-primary">
+                <span class="material-symbols-outlined text-electric-cyan">
+                  check_circle
+                </span>
+                Santiago Centro &amp; Providencia
+              </li>
+              <li class="flex items-center gap-3 font-label-bold text-label-bold text-primary">
+                <span class="material-symbols-outlined text-electric-cyan">
+                  check_circle
+                </span>
+                Las Condes &amp; Vitacura
+              </li>
+              <li class="flex items-center gap-3 font-label-bold text-label-bold text-primary">
+                <span class="material-symbols-outlined text-electric-cyan">
+                  check_circle
+                </span>
+                Ñuñoa &amp; La Reina
+              </li>
+              <li class="flex items-center gap-3 font-label-bold text-label-bold text-primary">
+                <span class="material-symbols-outlined text-electric-cyan">
+                  check_circle
+                </span>
+                Quilicura &amp; Sector Norte
+              </li>
+            </ul>
+            <div class="pt-6">
+              <div class="p-4 bg-primary text-white rounded-xl flex items-center gap-4">
+                <span class="material-symbols-outlined text-3xl">location_on</span>
+                <div>
+                  <p class="text-label-sm opacity-70">Casa Central</p>
+                  <p class="font-label-bold">Av. Apoquindo 4800, Las Condes</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="md:col-span-8 h-[400px] rounded-3xl overflow-hidden ambient-shadow grayscale hover:grayscale-0 transition-all duration-700">
+            <img
+              class="w-full h-full object-cover"
+              src={mapImg}
+              alt="Mapa de cobertura Santiago"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</BaseLayout>

@@ -1,0 +1,210 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Hero from "../components/Hero.astro";
+
+const bgImage = "/images/servicios-hero.jpg";
+const serviceImg = "/images/servicios-instalacion.jpg";
+const emergencyImg = "/images/servicios-modernizacion.jpg";
+const processImg = "/images/servicios-proceso.jpg";
+---
+
+<BaseLayout title="Servicios de Elevación | Travel Height" currentPage="/servicios/">
+  <main>
+    <Hero
+      backgroundImage={bgImage}
+      contentClass="pt-44 pb-section-padding"
+      gradientFrom="from-black/70"
+      gradientVia="via-black/40"
+      gradientTo="to-transparent"
+      badge="INGENIERÍA EN MOVIMIENTO"
+      badgeClass="bg-black/70 text-white rounded-full"
+      title="Excelencia técnica en soluciones de elevación vertical."
+      description="Desde el diseño inicial hasta el mantenimiento preventivo de alta precisión, garantizamos el rendimiento óptimo de su infraestructura."
+      primaryCta={{ text: "Ver Catálogo de Servicios", href: "/servicios/", class: "bg-navy-deep text-white hover:opacity-80 rounded-lg" }}
+      secondaryCta={{ text: "Consultoría Técnica", href: "/cotizacion/", class: "border-secondary/20 text-primary hover:border-electric-cyan bg-white/70 rounded-lg" }}
+    />
+
+    <!-- Service Bento Grid -->
+    <section class="py-section-padding bg-surface-container-low reveal">
+      <div class="px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
+        <div class="text-center mb-16">
+          <h2 class="font-headline-md text-headline-md text-primary mb-4">Nuestro Ecosistema de Servicios</h2>
+          <p class="font-body-md text-body-md text-on-surface-variant max-w-2xl mx-auto">
+            Soluciones integrales diseñadas para maximizar la vida útil y seguridad de sus equipos de transporte vertical.
+          </p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-gutter stagger">
+          <!-- Installation -->
+          <div class="md:col-span-8 group relative bg-white rounded-xl overflow-hidden ambient-shadow border border-transparent hover:border-electric-cyan transition-all duration-500 hover-lift">
+            <div class="grid md:grid-cols-2 h-full">
+              <div class="p-8 md:p-12 flex flex-col justify-center">
+                <span class="material-symbols-outlined text-primary text-4xl mb-4">precision_manufacturing</span>
+                <h3 class="font-headline-sm text-headline-sm text-primary mb-4">Instalación y Montaje</h3>
+                <p class="text-on-surface-variant font-body-md mb-6">Implementación de sistemas de última generación con protocolos de seguridad de grado industrial y precisión milimétrica.</p>
+                <ul class="space-y-3 mb-8">
+                  <li class="flex items-center gap-2 font-label-bold"><span class="material-symbols-outlined text-electric-cyan text-sm">check_circle</span> Cumplimiento Norma ISO</li>
+                  <li class="flex items-center gap-2 font-label-bold"><span class="material-symbols-outlined text-electric-cyan text-sm">check_circle</span> Eficiencia Energética A+</li>
+                  <li class="flex items-center gap-2 font-label-bold"><span class="material-symbols-outlined text-electric-cyan text-sm">check_circle</span> Integración IoT</li>
+                </ul>
+                <a class="inline-flex items-center gap-2 font-label-bold text-label-bold text-navy-deep hover:translate-x-1 transition-transform" href="#instalacion">Explorar Proceso <span class="material-symbols-outlined text-sm">arrow_forward</span></a>
+              </div>
+              <div class="relative h-64 md:h-full overflow-hidden">
+                <img src={serviceImg} alt="Instalación" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+              </div>
+            </div>
+          </div>
+          <!-- Emergency 24/7 -->
+          <div class="md:col-span-4 rounded-xl p-8 md:p-10 flex flex-col justify-between ambient-shadow group hover:bg-black transition-all duration-500" style="background-color: #0B132B;">
+            <div>
+              <div class="w-12 h-12 bg-electric-cyan/20 rounded-full flex items-center justify-center mb-6">
+                <span class="material-symbols-outlined text-electric-cyan" style="font-variation-settings: 'FILL' 1;">emergency</span>
+              </div>
+              <h3 class="font-headline-sm text-headline-sm text-white mb-4">Emergencias 24/7</h3>
+              <p class="text-white/70 font-body-md mb-6">Respuesta inmediata para cualquier fallo crítico. Nuestro equipo técnico está disponible los 365 días del año.</p>
+            </div>
+            <div class="space-y-4">
+              <div class="bg-white/5 p-4 rounded-lg border border-white/10">
+                <span class="block text-xs uppercase tracking-widest text-white/50 mb-1">Tiempo Promedio</span>
+                <span class="text-headline-sm font-bold text-electric-cyan">30 Minutos</span>
+              </div>
+              <button class="w-full bg-electric-cyan text-navy-deep py-4 rounded-lg font-label-bold text-label-bold hover:scale-[1.02] transition-transform">Llamar Ahora</button>
+            </div>
+          </div>
+          <!-- Preventive Maintenance -->
+          <div class="md:col-span-6 bg-white rounded-xl p-8 md:p-12 ambient-shadow border border-transparent hover:border-electric-cyan transition-all duration-500 hover-lift">
+            <span class="material-symbols-outlined text-primary text-4xl mb-4">analytics</span>
+            <h3 class="font-headline-sm text-headline-sm text-primary mb-4">Mantenimiento Preventivo</h3>
+            <p class="text-on-surface-variant font-body-md mb-8">Planes personalizados basados en el tráfico y uso de su edificio para evitar paradas no programadas.</p>
+            <div class="grid grid-cols-2 gap-4 mb-8">
+              <div class="p-4 bg-surface-container-low rounded-lg">
+                <span class="block font-label-bold text-label-sm text-on-surface-variant">Reducción de Fallas</span>
+                <span class="text-headline-sm font-bold text-primary">85%</span>
+              </div>
+              <div class="p-4 bg-surface-container-low rounded-lg">
+                <span class="block font-label-bold text-label-sm text-on-surface-variant">Extensión Vida Útil</span>
+                <span class="text-headline-sm font-bold text-primary">+15 Años</span>
+              </div>
+            </div>
+            <button class="text-navy-deep font-label-bold text-label-bold flex items-center gap-2">Ver Planes <span class="material-symbols-outlined text-sm">chevron_right</span></button>
+          </div>
+          <!-- Modernization -->
+          <div class="md:col-span-6 group relative bg-white rounded-xl overflow-hidden ambient-shadow border border-transparent hover:border-electric-cyan transition-all duration-500">
+            <div class="absolute inset-0 z-0">
+              <img src={emergencyImg} alt="Modernización" class="w-full h-full object-cover opacity-10 group-hover:scale-110 transition-transform duration-1000" />
+            </div>
+            <div class="relative z-10 p-8 md:p-12 flex flex-col h-full justify-between">
+              <div>
+                <span class="material-symbols-outlined text-primary text-4xl mb-4">upgrade</span>
+                <h3 class="font-headline-sm text-headline-sm text-primary mb-4">Modernización</h3>
+                <p class="text-on-surface-variant font-body-md max-w-sm mb-6">Actualice su equipo antiguo con tecnología de punta en tracción, control y estética de cabina.</p>
+              </div>
+              <div class="flex flex-wrap gap-3">
+                <span class="px-3 py-1 bg-surface-container rounded-full text-label-sm font-label-bold">Estética</span>
+                <span class="px-3 py-1 bg-surface-container rounded-full text-label-sm font-label-bold">Velocidad</span>
+                <span class="px-3 py-1 bg-surface-container rounded-full text-label-sm font-label-bold">Seguridad</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Work Process -->
+    <section class="py-section-padding bg-white overflow-hidden reveal" id="proceso">
+      <div class="px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
+        <div class="flex flex-col md:flex-row gap-gutter items-center">
+          <div class="w-full md:w-1/2">
+            <span class="inline-block px-4 py-2 bg-surface-container-low rounded-full font-label-bold text-label-bold text-primary mb-6">METODOLOGÍA TRAVEL HEIGHT</span>
+            <h2 class="font-headline-md text-headline-md text-primary mb-8">Protocolos de Ingeniería de Clase Mundial</h2>
+            <div class="space-y-8">
+              <div class="flex gap-6">
+                <span class="flex-shrink-0 w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center font-bold">01</span>
+                <div>
+                  <h3 class="font-label-bold text-label-bold text-primary mb-2">Diagnóstico Computarizado</h3>
+                  <p class="text-on-surface-variant font-body-md">Analizamos cada componente mediante sensores de vibración y telemetría avanzada para identificar debilidades estructurales.</p>
+                </div>
+              </div>
+              <div class="flex gap-6">
+                <span class="flex-shrink-0 w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center font-bold">02</span>
+                <div>
+                  <h3 class="font-label-bold text-label-bold text-primary mb-2">Intervención Técnica</h3>
+                  <p class="text-on-surface-variant font-body-md">Nuestros especialistas certificados ejecutan las tareas utilizando herramientas de precisión y repuestos originales OEM.</p>
+                </div>
+              </div>
+              <div class="flex gap-6">
+                <span class="flex-shrink-0 w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center font-bold">03</span>
+                <div>
+                  <h3 class="font-label-bold text-label-bold text-primary mb-2">Certificación de Seguridad</h3>
+                  <p class="text-on-surface-variant font-body-md">Pruebas de carga y estrés final para garantizar el cumplimiento de normativas locales e internacionales.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="w-full md:w-1/2 relative">
+            <div class="relative z-10 rounded-2xl overflow-hidden ambient-shadow">
+              <img src={processImg} alt="Tablet con telemetría" class="w-full aspect-square object-cover" />
+            </div>
+            <div class="absolute -top-12 -right-12 w-64 h-64 bg-electric-cyan/10 rounded-full blur-3xl z-0"></div>
+            <div class="absolute -bottom-12 -left-12 w-48 h-48 bg-primary/5 rounded-full blur-2xl z-0"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Technical Specs Table -->
+    <section class="py-section-padding bg-surface-container-low reveal">
+      <div class="px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
+        <div class="text-center mb-16">
+          <h2 class="font-headline-md text-headline-md text-primary">Especificaciones por Tipo de Servicio</h2>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full bg-white rounded-xl overflow-hidden ambient-shadow border-separate border-spacing-0">
+            <thead>
+              <tr class="bg-navy-deep text-white">
+                <th class="p-6 text-left font-label-bold text-label-bold uppercase tracking-wider">Característica</th>
+                <th class="p-6 text-left font-label-bold text-label-bold uppercase tracking-wider">Instalación</th>
+                <th class="p-6 text-left font-label-bold text-label-bold uppercase tracking-wider">Mantenimiento</th>
+                <th class="p-6 text-left font-label-bold text-label-bold uppercase tracking-wider">Modernización</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-surface-container">
+              <tr class="hover:bg-surface-container-low transition-colors">
+                <td class="p-6 font-label-bold text-label-bold">Tiempo Estimado</td>
+                <td class="p-6">4 - 12 Semanas</td>
+                <td class="p-6">Mensual / Trimestral</td>
+                <td class="p-6">2 - 6 Semanas</td>
+              </tr>
+              <tr class="bg-surface-container-lowest hover:bg-surface-container-low transition-colors">
+                <td class="p-6 font-label-bold text-label-bold">Garantía</td>
+                <td class="p-6">5 Años Estructura</td>
+                <td class="p-6">Permanente s/Contrato</td>
+                <td class="p-6">2 Años Componentes</td>
+              </tr>
+              <tr class="hover:bg-surface-container-low transition-colors">
+                <td class="p-6 font-label-bold text-label-bold">Soporte Técnico</td>
+                <td class="p-6">Remoto + On-site</td>
+                <td class="p-6">On-site 24/7</td>
+                <td class="p-6">Prioritario</td>
+              </tr>
+              <tr class="bg-surface-container-lowest hover:bg-surface-container-low transition-colors">
+                <td class="p-6 font-label-bold text-label-bold">Monitoreo IoT</td>
+                <td class="p-6 text-electric-cyan font-bold">Incluido</td>
+                <td class="p-6 text-electric-cyan font-bold">Opcional</td>
+                <td class="p-6 text-electric-cyan font-bold">Incluido</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Request Visit CTA Section -->
+    <section class="py-section-padding bg-navy-deep relative overflow-hidden -mb-[1px]">
+      <div class="relative z-10 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto text-center">
+        <h2 class="font-display-lg text-display-lg-mobile md:text-display-lg text-white mb-6">¿Listo para elevar sus estándares?</h2>
+        <p class="font-body-lg text-body-lg text-white/70 max-w-2xl mx-auto mb-10">Solicite hoy mismo una inspección técnica integral de sus equipos y reciba un diagnóstico detallado sin costo para nuevos clientes corporativos.</p>
+        <a href="/cotizacion/" class="bg-electric-cyan text-navy-deep px-10 py-5 rounded-lg font-label-bold text-label-bold text-lg hover:scale-105 transition-transform ambient-shadow inline-block">Solicitar Visita Técnica</a>
+      </div>
+    </section>
+  </main>
+</BaseLayout>

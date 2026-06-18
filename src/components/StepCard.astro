@@ -1,0 +1,43 @@
+---
+export interface Props {
+  steps: Array<{
+    number: string;
+    title: string;
+    description: string;
+    icon: string;
+  }>;
+  title: string;
+  description: string;
+  columns?: 2 | 3 | 4;
+}
+const { steps, title, description, columns = 3 } = Astro.props;
+const colClass = {
+  2: "md:grid-cols-2",
+  3: "md:grid-cols-3",
+  4: "md:grid-cols-4",
+}[columns];
+---
+
+<section class="px-margin-mobile md:px-margin-desktop py-section-padding reveal">
+  <div class="max-w-container-max mx-auto">
+    <div class="mb-stack-lg space-y-2">
+      <h2 class="font-headline-md text-headline-md text-primary">{title}</h2>
+      <p class="text-on-surface-variant font-body-md">{description}</p>
+    </div>
+    <div class:list={["grid grid-cols-1", colClass, "gap-gutter stagger"]}>
+      {steps.map((step) => (
+        <div class="group bg-white p-10 rounded-2xl ambient-shadow border-b-4 border-transparent hover:border-electric-cyan transition-all hover-lift">
+          {step.icon && (
+            <div class="w-14 h-14 bg-secondary-container rounded-xl flex items-center justify-center mb-6 text-primary group-hover:scale-110 transition-transform">
+              <span class="material-symbols-outlined text-3xl">{step.icon}</span>
+            </div>
+          )}
+          <h3 class="font-headline-sm text-headline-sm text-primary mb-3">
+            {step.number}. {step.title}
+          </h3>
+          <p class="text-on-surface-variant font-body-md">{step.description}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

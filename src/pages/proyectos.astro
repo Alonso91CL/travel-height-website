@@ -1,0 +1,117 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const projects = [
+  {
+    title: "Torre Vitacura Premium",
+    category: "Residencial",
+    location: "Santiago",
+    description: "Instalación de 6 ascensores inteligentes de alta velocidad con sistema de pre-asignación de llamadas y acabados personalizados en mármol y acero inoxidable.",
+    image: "/images/proyecto-torre-vitacura.jpg",
+    span: "md:col-span-8",
+  },
+  {
+    title: "Clínica del Mar",
+    category: "Hospitalario",
+    location: "Viña del Mar",
+    description: "Modernización completa de ascensores de carga y pasajeros con protocolos de sanitización automática UV para entornos hospitalarios críticos.",
+    image: "/images/proyecto-clinica-mar.jpg",
+    span: "md:col-span-4",
+  },
+  {
+    title: "Centro Logístico Pudahuel",
+    category: "Industrial",
+    location: "Santiago",
+    description: "Ascensores de carga pesada con montacargas de alta capacidad (5000kg) para centro de distribución logística.",
+    image: "/images/proyecto-logistica-pudahuel.jpg",
+    span: "md:col-span-4",
+  },
+  {
+    title: "Mall Plaza Trébol",
+    category: "Comercial",
+    location: "Concepción",
+    description: "Instalación de ascensores panorámicos de cristal templado, integrando movilidad fluida con la estética visual del centro comercial.",
+    image: "/images/proyecto-mall-trebol.jpg",
+    span: "md:col-span-8",
+  },
+];
+---
+
+<BaseLayout title="Proyectos y Casos de Éxito | Travel Height" currentPage="/proyectos/">
+  <main>
+    <!-- Hero -->
+    <section class="px-margin-mobile md:px-margin-desktop pt-32 pb-section-padding reveal">
+      <div class="max-w-container-max mx-auto">
+        <div class="grid md:grid-cols-2 gap-gutter items-end">
+          <div class="hero-content">
+            <span class="font-label-bold text-label-sm text-secondary uppercase tracking-[0.2em] mb-4 block">Portafolio</span>
+            <h1 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg text-primary">
+              Elevando los estándares de la arquitectura moderna.
+            </h1>
+          </div>
+          <p class="font-body-lg text-body-lg text-on-surface-variant">
+            Descubra nuestras soluciones de transporte vertical en proyectos icónicos, desde complejos residenciales hasta infraestructuras hospitalarias de alta tecnología.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Filters -->
+    <section class="px-margin-mobile md:px-margin-desktop pb-8">
+      <div class="max-w-container-max mx-auto flex flex-wrap gap-3">
+        {["Todos", "Residencial", "Comercial", "Industrial", "Hospitalario"].map((tag) => (
+          <button class:list={[
+            "px-5 py-2 rounded-full font-label-bold text-label-sm transition-all",
+            tag === "Todos"
+              ? "bg-primary text-white"
+              : "bg-surface-container-high text-on-surface-variant hover:bg-primary hover:text-white",
+          ]}>
+            {tag}
+          </button>
+        ))}
+      </div>
+    </section>
+
+    <!-- Project Gallery -->
+    <section class="px-margin-mobile md:px-margin-desktop py-section-padding reveal">
+      <div class="max-w-container-max mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-gutter stagger">
+          {projects.map((p, i) => (
+            <div class:list={[p.span, "group relative rounded-xl overflow-hidden ambient-shadow project-card cursor-pointer", i === 0 || i === 1 ? "h-[500px]" : "h-[400px]"]}>
+              <div class="absolute inset-0 bg-cover bg-center project-image transition-transform duration-700 ease-out" style={`background-image: url('${p.image}')`}></div>
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent opacity-60 group-hover:opacity-80 transition-opacity"></div>
+              <div class="absolute bottom-0 left-0 p-8 w-full">
+                <div class="flex items-center gap-2 mb-3">
+                  <span class="bg-white/20 backdrop-blur-md text-white text-[10px] font-label-bold px-3 py-1 rounded-full uppercase tracking-tighter">{p.category}</span>
+                  {p.location && <span class="text-white/70 text-[12px] font-label-bold">{p.location}</span>}
+                </div>
+                <h3 class:list={["text-white", i === 0 || i === 3 ? "font-headline-md text-headline-md" : "font-headline-sm text-headline-sm", "mb-2"]}>{p.title}</h3>
+                <p class="text-white/80 font-body-md text-body-md max-w-lg opacity-0 group-hover:opacity-100 transition-opacity delay-100">
+                  {p.description}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="bg-surface-container-low px-margin-mobile md:px-margin-desktop py-section-padding reveal">
+      <div class="max-w-container-max mx-auto text-center">
+        <h2 class="font-headline-md text-headline-md text-primary mb-4">¿Tiene un proyecto en mente?</h2>
+        <p class="text-on-surface-variant font-body-md max-w-2xl mx-auto mb-8">
+          Contáctenos para discutir cómo podemos hacer realidad su próximo proyecto de elevación vertical.
+        </p>
+        <div class="flex flex-wrap justify-center gap-4">
+          <a href="/cotizacion/" class="bg-black text-white font-label-bold px-8 py-4 rounded-xl hover:opacity-80 transition-all hover-lift press">
+            Solicitar Cotización
+          </a>
+          <a href="/nosotros/" class="border-2 border-outline-variant text-primary font-label-bold px-8 py-4 rounded-xl hover:border-electric-cyan transition-all hover-lift">
+            Conocer Más
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+</BaseLayout>

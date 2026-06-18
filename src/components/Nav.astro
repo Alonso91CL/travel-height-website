@@ -1,0 +1,61 @@
+---
+export interface Props {
+  currentPage?: string;
+}
+const { currentPage = "/" } = Astro.props;
+const links = [
+  { href: "/", label: "Inicio" },
+  { href: "/servicios/", label: "Servicios" },
+  { href: "/emergencias/", label: "Emergencias" },
+  { href: "/proyectos/", label: "Proyectos" },
+  { href: "/nosotros/", label: "Nosotros" },
+  { href: "/cotizacion/", label: "Contacto" },
+];
+const logoUrl = "/images/logo.png";
+---
+
+<header
+  class="fixed top-0 w-full z-50 bg-white/70 backdrop-blur-md shadow-sm transition-all duration-300"
+  id="main-header"
+>
+  <div
+    class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop flex justify-between items-center h-20"
+  >
+    <a href="/" class="flex items-center gap-2">
+      <img
+        src={logoUrl}
+        alt="Travel Height Logo"
+        class="h-12 w-auto object-contain"
+        style="width: 180px;"
+      />
+    </a>
+    <nav class="hidden md:flex items-center gap-stack-lg">
+      {links.map((link) => (
+        <a
+          href={link.href}
+          class:list={[
+            "font-label-bold text-label-bold text-on-surface-variant hover:text-primary transition-colors nav-link",
+            { active: currentPage === link.href },
+          ]}
+        >
+          {link.label}
+        </a>
+      ))}
+    </nav>
+    <div class="flex items-center gap-4">
+      <a
+        href="/cotizacion/"
+        class="hidden sm:inline-block bg-black text-white px-6 py-2.5 rounded-lg font-label-bold text-label-bold hover:opacity-80 transition-all active:scale-95 press"
+      >
+        Cotizar
+      </a>
+      <button
+        class="md:hidden text-primary p-2"
+        id="mobile-menu-btn"
+        aria-label="Menú"
+      >
+        <span class="material-symbols-outlined text-3xl">menu</span>
+      </button>
+    </div>
+  </div>
+</header>
