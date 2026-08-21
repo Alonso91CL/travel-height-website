@@ -10,7 +10,11 @@ const zlib = require("zlib");
 
 const DIST = path.join(__dirname, "dist");
 const PORT = Number(process.env.PORT) || 3000;
-const HOST = process.env.HOST || "127.0.0.1";
+// Nunca bindear a IPs publicas: en hosting compartido colisionan con otras
+// apps. Solo se aceptan loopback o 0.0.0.0; cualquier otro HOST se ignora.
+const RAW_HOST = process.env.HOST || "";
+const IS_SAFE_HOST = /^(127\.|localhost$|0\.0\.0\.0$|::1$)/.test(RAW_HOST);
+const HOST = IS_SAFE_HOST ? RAW_HOST : "127.0.0.1";
 
 const MIME = {
   ".html": "text/html; charset=utf-8",
@@ -123,6 +127,21 @@ const server = http.createServer((req, res) => {
       req.method === "HEAD" ? res.end() : res.end(data);
     });
   });
+});
+
+server.on("error", (err) => {
+  if (err && err.code === "EADDRINUSE") {
+    console.error(`[server] El puerto ${PORT} ya esta en uso en ${HOST}.`);
+    console.error("[server] Si Passenger ya esta sirviendo esta app (cPanel), NO la inicies manualmente:");
+    console.error("[server]   - Usa Restart en el panel, o touch tmp/restart.txt");
+    console.error("[server]   - Para pruebas manuales usa otro puerto: PORT=3100 node server.cjs");
+    process.exit(1);
+  }
+  if (err && err.code === "EACCES") {
+    console.error(`[server] Sin permisos para escuchar en ${HOST}:${PORT} (prueba un puerto > 1024).`);
+    process.exit(1);
+  }
+  throw err;
 });
 
 server.listen(PORT, HOST, () => {
