@@ -54,23 +54,35 @@ Construido como **sitio 100% estático** con [Astro](https://astro.build) + [Tai
 
 2. **Git Version Control** → clonar el repositorio con
    Clone Path = `/home/USUARIO/travelheight` (la misma raíz de aplicación).
-3. Ejecutar **Run NPM Install** y luego **Restart** desde la app Node.
+3. Botón **Restart** en la app Node (no se necesita Run NPM Install:
+   `server.cjs` no tiene dependencias).
 4. Opcional: añadir variable de entorno `NODE_ENV=production`.
 
 ### Despliegues siguientes
 
+> **Importante:** el build se hace **localmente**, no en el servidor. Los
+> hosts compartidos cPanel tienen límites de RAM (CloudLinux) y compilar
+> Astro allí produce OOM (`memory allocation failed`, SIGABRT). Por eso
+> `dist/` se versiona con el repo y `.cpanel.yml` solo reinicia la app.
+
 Basado en la [guía oficial de Git Deployment de cPanel](https://docs.cpanel.net/knowledge-base/web-services/guide-to-git-deployment/).
 El repositorio necesita: `.cpanel.yml` en la raíz ✅, al menos una rama ✅ y
-**árbol de trabajo limpio** (este repo ignora `dist/`, `node_modules/` y
-`tmp/`, que son los artefactos que genera el deploy).
+**árbol de trabajo limpio**.
 
-**Modo pull (recomendado):**
+**Flujo de publicación:**
 
-```text
-git push → GitHub/GitLab
-cPanel » Git Version Control » Pull or Deploy:
-  1. "Update from Remote"   (trae los cambios)
-  2. "Deploy HEAD Commit"   (ejecuta .cpanel.yml)
+```sh
+# 1. Compilar localmente (requiere Node >= 22.12)
+pnpm build
+
+# 2. Versionar el build y subir
+git add dist
+git commit -m "Build"
+git push
+
+# 3. En cPanel » Git Version Control » Pull or Deploy:
+#    "Update from Remote" → "Deploy HEAD Commit"
+#    (.cpanel.yml verifica dist/ y toca tmp/restart.txt para reiniciar)
 ```
 
 **Modo push (opcional, sin GitHub):** añade el repositorio del servidor como
@@ -81,14 +93,9 @@ git remote add production ssh://USUARIO@servidor:PUERTO/home/USUARIO/travelheigh
 git push production master
 ```
 
-En ambos casos `.cpanel.yml` ejecuta:
-`npm install` → `npm run build` → `touch tmp/restart.txt`.
-
-El servidor (`server.cjs`) sirve `dist/` con URLs limpias, gzip,
-cache inmutable para `/_astro/` y página 404 personalizada.
-`.cpanel.yml` detecta automáticamente el binario del selector CloudLinux
-(`/opt/alt/alt-nodejs*/root/usr/bin`) y del venv de la app
-(`~/nodevenv/<app>/<version>/bin`), incluido Node 24.
+`server.cjs` usa solo módulos nativos de Node: el servidor no necesita
+`node_modules`. Sirve `dist/` con URLs limpias, gzip, cache inmutable para
+`/_astro/` y página 404 personalizada.
 
 ⚠️ No uses comodines (`*`) para copiar archivos en `.cpanel.yml`: podría
 desplegar el directorio `.git` y causar problemas graves (advertencia oficial).

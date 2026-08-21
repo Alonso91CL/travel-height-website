@@ -1,5 +1,6 @@
-# build output
-dist/
+# NOTA: dist/ NO se ignora a proposito: los hosts compartidos cPanel no
+# tienen RAM para compilar Astro en el servidor (OOM). Se compila localmente
+# y el build se versiona para que .cpanel.yml solo tenga que reiniciar.
 
 # passenger restart marker (cpanel)
 tmp/
