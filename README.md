@@ -1,6 +1,6 @@
 # Travel Height Elevadores — Sitio Web
 
-Sitio corporativo de **Travel Height Elevadores**, empresa de ingeniería vertical en Chile: instalación, mantenimiento, modernización y emergencias 24/7.
+Sitio corporativo de **Travel Height SPA**, empresa de ingeniería vertical en Chile: instalación, mantenimiento, modernización y emergencias 24/7.
 
 Construido como **sitio 100% estático** con [Astro](https://astro.build) + [Tailwind CSS 4](https://tailwindcss.com), listo para desplegarse en **cPanel (Node.js App / Passenger)** con despliegue automatizado vía Git.
 
@@ -57,17 +57,41 @@ Construido como **sitio 100% estático** con [Astro](https://astro.build) + [Tai
 3. Ejecutar **Run NPM Install** y luego **Restart** desde la app Node.
 4. Opcional: añadir variable de entorno `NODE_ENV=production`.
 
-### Despliegues siguientes (automáticos)
+### Despliegues siguientes
+
+Basado en la [guía oficial de Git Deployment de cPanel](https://docs.cpanel.net/knowledge-base/web-services/guide-to-git-deployment/).
+El repositorio necesita: `.cpanel.yml` en la raíz ✅, al menos una rama ✅ y
+**árbol de trabajo limpio** (este repo ignora `dist/`, `node_modules/` y
+`tmp/`, que son los artefactos que genera el deploy).
+
+**Modo pull (recomendado):**
 
 ```text
-git push → cPanel "Pull or Deploy" (o Deploy automático) → .cpanel.yml:
-  npm install → npm run build → touch tmp/restart.txt
+git push → GitHub/GitLab
+cPanel » Git Version Control » Pull or Deploy:
+  1. "Update from Remote"   (trae los cambios)
+  2. "Deploy HEAD Commit"   (ejecuta .cpanel.yml)
 ```
+
+**Modo push (opcional, sin GitHub):** añade el repositorio del servidor como
+segundo remote y el hook post-receive de cPanel despliega automáticamente:
+
+```sh
+git remote add production ssh://USUARIO@servidor:PUERTO/home/USUARIO/travelheight
+git push production master
+```
+
+En ambos casos `.cpanel.yml` ejecuta:
+`npm install` → `npm run build` → `touch tmp/restart.txt`.
 
 El servidor (`server.cjs`) sirve `dist/` con URLs limpias, gzip,
 cache inmutable para `/_astro/` y página 404 personalizada.
 `.cpanel.yml` detecta automáticamente el binario del selector CloudLinux
-(`/opt/alt/alt-nodejs*/root/usr/bin`), incluido Node 24.
+(`/opt/alt/alt-nodejs*/root/usr/bin`) y del venv de la app
+(`~/nodevenv/<app>/<version>/bin`), incluido Node 24.
+
+⚠️ No uses comodines (`*`) para copiar archivos en `.cpanel.yml`: podría
+desplegar el directorio `.git` y causar problemas graves (advertencia oficial).
 
 ## Configuración de contacto
 

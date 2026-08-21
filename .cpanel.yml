@@ -1,21 +1,29 @@
 ---
 # Despliegue automatico para cPanel (Git Version Control).
-# cPanel ejecuta estas tareas tras cada `git pull` del repositorio.
+# Formato oficial: https://docs.cpanel.net/knowledge-base/web-services/guide-to-git-deployment/
+# cPanel ejecuta estas tareas en "Deploy HEAD Commit" (pull) o tras un
+# `git push` directo al repositorio gestionado (hook post-receive, push).
 #
 # Requisito previo (una sola vez, en cPanel):
 #   1. "Setup Node.js App" -> crear aplicacion con:
-#        - Application root:  la carpeta donde se clona este repo
-#        - Startup file:      server.cjs
+#        - Application root: la carpeta donde se clona este repo
+#        - Startup file:     server.cjs
 #   2. "Git Version Control" -> clonar este repositorio.
-# Cada deploy posterior: instalar dependencias + build + restart de Passenger.
+#
+# Nota: este repo ignora dist/, node_modules/ y tmp/, por lo que el arbol
+# de trabajo permanece limpio tras cada deploy (requisito de cPanel).
 deployment:
   tasks:
-    # Localizar el binario de Node (CloudLinux Node selector / EasyApache)
-    - for d in $(ls -d /opt/alt/alt-nodejs*/root/usr/bin /opt/cpanel/ea-nodejs*/bin 2>/dev/null | sort -V | tail -1); do export PATH=$d:$PATH; done
-    - command -v node >/dev/null || (echo "ERROR: node no encontrado en el servidor"; exit 1)
+    # Preferir el binario del venv creado por el selector Node (version
+    # exacta elegida en el panel); como respaldo, rutas globales CloudLinux.
+    # El ultimo export en el bucle queda primero en PATH.
+    - for d in $(ls -d /opt/alt/alt-nodejs*/root/usr/bin /opt/cpanel/ea-nodejs*/bin 2>/dev/null | sort -V | tail -1) $HOME/nodevenv/*/*/bin; do export PATH=$d:$PATH; done
+    - 'command -v node >/dev/null || (echo "ERROR: node no encontrado en el servidor"; exit 1)'
     - node --version && npm --version
-    - npm install --no-audit --no-fund
+    # --no-package-lock evita crear archivos sin trackear (mantiene el
+    # arbol limpio; las versiones ya estan fijadas por pnpm-lock.yaml)
+    - npm install --no-audit --no-fund --no-package-lock
     - npm run build
-    # Reiniciar la aplicacion Passenger
+    # Reiniciar la aplicacion Passenger (arranque automatico de server.cjs)
     - mkdir -p tmp && touch tmp/restart.txt
-    - echo "Deploy completado: build regenerado y app reiniciada."
+    - 'echo "Deploy completado: build regenerado y app reiniciada."'

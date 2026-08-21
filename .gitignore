@@ -35,5 +35,8 @@ desktop.ini
 # jetbrains setting folder
 .idea/
 
+# local screenshots / notes (not project assets)
+image.png
+
 # stitch design reference (not part of the project)
 stitch-demo/
