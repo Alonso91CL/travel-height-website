@@ -1,16 +1,10 @@
 ---
+import { navLinks } from "../config/site";
+
 export interface Props {
   currentPage?: string;
 }
 const { currentPage = "/" } = Astro.props;
-const links = [
-  { href: "/", label: "Inicio" },
-  { href: "/servicios/", label: "Servicios" },
-  { href: "/emergencias/", label: "Emergencias" },
-  { href: "/proyectos/", label: "Proyectos" },
-  { href: "/nosotros/", label: "Nosotros" },
-  { href: "/cotizacion/", label: "Contacto" },
-];
 const logoUrl = "/images/logo.png";
 ---
 
@@ -30,7 +24,7 @@ const logoUrl = "/images/logo.png";
       />
     </a>
     <nav class="hidden md:flex items-center gap-stack-lg">
-      {links.map((link) => (
+      {navLinks.map((link) => (
         <a
           href={link.href}
           class:list={[

@@ -37,8 +37,3 @@ desktop.ini
 
 # stitch design reference (not part of the project)
 stitch-demo/
-
-# old template files from astro init
-src/assets/
-src/components/Welcome.astro
-src/layouts/Layout.astro

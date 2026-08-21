@@ -10,11 +10,17 @@
     "build": "astro build",
     "preview": "astro preview",
     "start": "node server.cjs",
+    "check": "astro check",
     "astro": "astro"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.3.1",
     "astro": "^6.4.7",
     "tailwindcss": "^4.3.1"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "@astrojs/sitemap": "^3.7.3",
+    "typescript": "^6.0.3"
   }
 }

@@ -2,7 +2,11 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 ---
 
-<BaseLayout title="Solicitar Cotización | Travel Height" currentPage="/cotizacion/">
+<BaseLayout
+  title="Solicitar Cotización | Travel Height"
+  description="Solicita tu cotización de instalación, mantenimiento o modernización de elevadores. Visita técnica sin costo y respuesta en 24 horas en todo Chile."
+  currentPage="/cotizacion/"
+>
   <main class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop pt-32 pb-section-padding blueprint-pattern">
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
       <!-- Left: Value Propositions -->
@@ -65,19 +69,19 @@ import BaseLayout from "../layouts/BaseLayout.astro";
               <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div class="space-y-2">
                   <label class="font-label-bold text-label-bold text-on-surface">Nombre Completo</label>
-                  <input class="w-full px-4 py-3 bg-surface-container-low border-none rounded-lg focus:ring-2 focus:ring-electric-cyan focus:bg-white transition-all outline-none" placeholder="Ej. Carlos Mendoza" type="text" />
+                  <input class="w-full px-4 py-3 bg-surface-container-low border-none rounded-lg focus:ring-2 focus:ring-electric-cyan focus:bg-white transition-all outline-none" placeholder="Ej. Carlos Mendoza" type="text" name="nombre" />
                 </div>
                 <div class="space-y-2">
                   <label class="font-label-bold text-label-bold text-on-surface">Empresa / Copropiedad</label>
-                  <input class="w-full px-4 py-3 bg-surface-container-low border-none rounded-lg focus:ring-2 focus:ring-electric-cyan focus:bg-white transition-all outline-none" placeholder="Nombre de la entidad" type="text" />
+                  <input class="w-full px-4 py-3 bg-surface-container-low border-none rounded-lg focus:ring-2 focus:ring-electric-cyan focus:bg-white transition-all outline-none" placeholder="Nombre de la entidad" type="text" name="empresa" />
                 </div>
                 <div class="space-y-2">
                   <label class="font-label-bold text-label-bold text-on-surface">Correo Electrónico</label>
-                  <input class="w-full px-4 py-3 bg-surface-container-low border-none rounded-lg focus:ring-2 focus:ring-electric-cyan focus:bg-white transition-all outline-none" placeholder="carlos@empresa.com" type="email" />
+                  <input class="w-full px-4 py-3 bg-surface-container-low border-none rounded-lg focus:ring-2 focus:ring-electric-cyan focus:bg-white transition-all outline-none" placeholder="carlos@empresa.com" type="email" name="email" />
                 </div>
                 <div class="space-y-2">
                   <label class="font-label-bold text-label-bold text-on-surface">Teléfono</label>
-                  <input class="w-full px-4 py-3 bg-surface-container-low border-none rounded-lg focus:ring-2 focus:ring-electric-cyan focus:bg-white transition-all outline-none" placeholder="+56 2..." type="tel" />
+                  <input class="w-full px-4 py-3 bg-surface-container-low border-none rounded-lg focus:ring-2 focus:ring-electric-cyan focus:bg-white transition-all outline-none" placeholder="+56 2..." type="tel" name="telefono" />
                 </div>
               </div>
               <div class="mt-10 flex justify-end">
@@ -97,7 +101,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
               <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div class="space-y-2">
                   <label class="font-label-bold text-label-bold text-on-surface">Tipo de Edificación</label>
-                  <select class="w-full px-4 py-3 bg-surface-container-low border-none rounded-lg focus:ring-2 focus:ring-electric-cyan focus:bg-white transition-all outline-none appearance-none">
+                  <select class="w-full px-4 py-3 bg-surface-container-low border-none rounded-lg focus:ring-2 focus:ring-electric-cyan focus:bg-white transition-all outline-none appearance-none" name="edificacion">
                     <option>Residencial</option>
                     <option>Oficinas / Corporativo</option>
                     <option>Industrial / Carga</option>
@@ -107,7 +111,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
                 </div>
                 <div class="space-y-2">
                   <label class="font-label-bold text-label-bold text-on-surface">Servicio Requerido</label>
-                  <select class="w-full px-4 py-3 bg-surface-container-low border-none rounded-lg focus:ring-2 focus:ring-electric-cyan focus:bg-white transition-all outline-none appearance-none">
+                  <select class="w-full px-4 py-3 bg-surface-container-low border-none rounded-lg focus:ring-2 focus:ring-electric-cyan focus:bg-white transition-all outline-none appearance-none" name="servicio">
                     <option>Instalación Equipo Nuevo</option>
                     <option>Mantenimiento Mensual</option>
                     <option>Modernización Tecnológica</option>
@@ -118,19 +122,19 @@ import BaseLayout from "../layouts/BaseLayout.astro";
                   <label class="font-label-bold text-label-bold text-on-surface">Número de Paradas (Pisos)</label>
                   <div class="flex gap-4">
                     <label class="flex-1 cursor-pointer">
-                      <input class="sr-only peer" name="floors" type="radio" />
+                      <input class="sr-only peer" name="floors" type="radio" value="1-5" />
                       <div class="text-center py-3 border border-outline-variant rounded-lg peer-checked:bg-black peer-checked:text-white peer-checked:border-black transition-all">1-5</div>
                     </label>
                     <label class="flex-1 cursor-pointer">
-                      <input class="sr-only peer" name="floors" type="radio" />
+                      <input class="sr-only peer" name="floors" type="radio" value="6-15" />
                       <div class="text-center py-3 border border-outline-variant rounded-lg peer-checked:bg-black peer-checked:text-white peer-checked:border-black transition-all">6-15</div>
                     </label>
                     <label class="flex-1 cursor-pointer">
-                      <input class="sr-only peer" name="floors" type="radio" />
+                      <input class="sr-only peer" name="floors" type="radio" value="16-30" />
                       <div class="text-center py-3 border border-outline-variant rounded-lg peer-checked:bg-black peer-checked:text-white peer-checked:border-black transition-all">16-30</div>
                     </label>
                     <label class="flex-1 cursor-pointer">
-                      <input class="sr-only peer" name="floors" type="radio" />
+                      <input class="sr-only peer" name="floors" type="radio" value="30+" />
                       <div class="text-center py-3 border border-outline-variant rounded-lg peer-checked:bg-black peer-checked:text-white peer-checked:border-black transition-all">30+</div>
                     </label>
                   </div>
@@ -157,21 +161,21 @@ import BaseLayout from "../layouts/BaseLayout.astro";
               <div class="space-y-8">
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <label class="cursor-pointer group">
-                    <input class="sr-only peer" name="urgency" type="radio" />
+                    <input class="sr-only peer" name="urgency" type="radio" value="Próximos 3 meses" />
                     <div class="h-full p-6 border border-outline-variant rounded-xl text-center transition-all peer-checked:border-electric-cyan peer-checked:bg-electric-cyan/5 peer-checked:shadow-lg">
                       <span class="material-symbols-outlined text-3xl mb-2 text-on-surface-variant group-hover:text-electric-cyan">calendar_today</span>
                       <div class="font-label-bold">Próximos 3 meses</div>
                     </div>
                   </label>
                   <label class="cursor-pointer group">
-                    <input class="sr-only peer" name="urgency" type="radio" />
+                    <input class="sr-only peer" name="urgency" type="radio" value="Lo antes posible" />
                     <div class="h-full p-6 border border-outline-variant rounded-xl text-center transition-all peer-checked:border-electric-cyan peer-checked:bg-electric-cyan/5 peer-checked:shadow-lg">
                       <span class="material-symbols-outlined text-3xl mb-2 text-on-surface-variant group-hover:text-electric-cyan">bolt</span>
                       <div class="font-label-bold">Lo antes posible</div>
                     </div>
                   </label>
                   <label class="cursor-pointer group">
-                    <input class="sr-only peer" name="urgency" type="radio" />
+                    <input class="sr-only peer" name="urgency" type="radio" value="Planificación Anual" />
                     <div class="h-full p-6 border border-outline-variant rounded-xl text-center transition-all peer-checked:border-electric-cyan peer-checked:bg-electric-cyan/5 peer-checked:shadow-lg">
                       <span class="material-symbols-outlined text-3xl mb-2 text-on-surface-variant group-hover:text-electric-cyan">schedule</span>
                       <div class="font-label-bold">Planificación Anual</div>
@@ -180,7 +184,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
                 </div>
                 <div class="space-y-2">
                   <label class="font-label-bold text-label-bold text-on-surface">Comentarios Adicionales (Opcional)</label>
-                  <textarea class="w-full px-4 py-3 bg-surface-container-low border-none rounded-lg focus:ring-2 focus:ring-electric-cyan focus:bg-white transition-all outline-none resize-none" placeholder="Cuéntenos más detalles técnicos o requisitos especiales..." rows="4"></textarea>
+                  <textarea class="w-full px-4 py-3 bg-surface-container-low border-none rounded-lg focus:ring-2 focus:ring-electric-cyan focus:bg-white transition-all outline-none resize-none" placeholder="Cuéntenos más detalles técnicos o requisitos especiales..." rows="4" name="comentarios"></textarea>
                 </div>
               </div>
               <div class="mt-10 flex justify-between items-center">
@@ -222,36 +226,87 @@ import BaseLayout from "../layouts/BaseLayout.astro";
   </style>
 
   <script>
-    function goToStep(step) {
-      document.querySelectorAll('.step-transition').forEach(function(el) {
-        el.classList.add('hidden', 'opacity-0', 'translate-x-8');
-        el.classList.remove('translate-x-0', 'opacity-100');
+    import { whatsappUrl } from "../config/site";
+
+    const byId = <T extends HTMLElement>(id: string): T | null =>
+      document.getElementById(id) as T | null;
+
+    function goToStep(step: number) {
+      document.querySelectorAll(".step-transition").forEach((el) => {
+        el.classList.add("hidden", "opacity-0", "translate-x-8");
+        el.classList.remove("translate-x-0", "opacity-100");
       });
-      var target = document.getElementById('step-' + step);
+      const target = byId(`step-${step}`);
       if (target) {
-        target.classList.remove('hidden');
-        setTimeout(function() {
-          target.classList.remove('opacity-0', 'translate-x-8');
-          target.classList.add('opacity-100', 'translate-x-0');
+        target.classList.remove("hidden");
+        setTimeout(() => {
+          target.classList.remove("opacity-0", "translate-x-8");
+          target.classList.add("opacity-100", "translate-x-0");
         }, 50);
       }
-      var progress = (step / 3) * 100;
-      document.getElementById('progress-bar').style.width = progress + '%';
+      const bar = byId("progress-bar");
+      if (bar) bar.style.width = `${(step / 3) * 100}%`;
     }
 
     function showSuccess() {
-      document.getElementById('quote-form').style.display = 'none';
-      document.getElementById('success-screen').classList.remove('hidden');
-      document.getElementById('success-screen').classList.add('flex');
-      document.getElementById('progress-bar').style.width = '100%';
+      const form = byId("quote-form");
+      const screen = byId("success-screen");
+      const bar = byId("progress-bar");
+      if (form) form.style.display = "none";
+      if (screen) {
+        screen.classList.remove("hidden");
+        screen.classList.add("flex");
+      }
+      if (bar) bar.style.width = "100%";
     }
 
-    document.addEventListener('click', function(e) {
-      if (e.target.closest('#step1-next')) goToStep(2);
-      else if (e.target.closest('#step2-next')) goToStep(3);
-      else if (e.target.closest('#step2-back')) goToStep(1);
-      else if (e.target.closest('#step3-back')) goToStep(2);
-      else if (e.target.closest('#step3-submit')) showSuccess();
+    function getRadioValue(form: HTMLFormElement, name: string): string {
+      const checked = form.querySelector<HTMLInputElement>(
+        `input[name="${name}"]:checked`,
+      );
+      return checked ? checked.value : "";
+    }
+
+    function submitQuote() {
+      const form = byId<HTMLFormElement>("quote-form");
+      if (!form) return;
+      const data = new FormData(form);
+      const nombre = String(data.get("nombre") || "").trim();
+      const email = String(data.get("email") || "").trim();
+
+      if (!nombre || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        alert("Completa tu nombre y un correo electrónico válido en el primer paso.");
+        goToStep(1);
+        return;
+      }
+
+      const field = (name: string) => String(data.get(name) || "").trim();
+      const lines = [
+        "Hola, quiero solicitar una cotización.",
+        `Nombre: ${nombre}`,
+        field("empresa") && `Empresa: ${field("empresa")}`,
+        `Email: ${email}`,
+        field("telefono") && `Teléfono: ${field("telefono")}`,
+        `Edificación: ${field("edificacion")}`,
+        `Servicio: ${field("servicio")}`,
+        `Paradas (pisos): ${getRadioValue(form, "floors") || "Sin especificar"}`,
+        `Urgencia: ${getRadioValue(form, "urgency") || "Sin especificar"}`,
+      ];
+      const comentarios = field("comentarios");
+      if (comentarios) lines.push(`Comentarios: ${comentarios}`);
+
+      window.open(whatsappUrl(lines.filter(Boolean).join("\n")), "_blank", "noopener");
+      showSuccess();
+    }
+
+    document.addEventListener("click", (event) => {
+      const target = event.target as HTMLElement | null;
+      if (!target) return;
+      if (target.closest("#step1-next")) goToStep(2);
+      else if (target.closest("#step2-next")) goToStep(3);
+      else if (target.closest("#step2-back")) goToStep(1);
+      else if (target.closest("#step3-back")) goToStep(2);
+      else if (target.closest("#step3-submit")) submitQuote();
     });
   </script>
 </BaseLayout>

@@ -1,6 +1,5 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import Hero from "../components/Hero.astro";
 import StatsBar from "../components/StatsBar.astro";
 
 const teamImg = "/images/nosotros-equipo.jpg";
@@ -9,7 +8,12 @@ const heroBg = "/images/nosotros-hero.jpg";
 const visionImg = "/images/nosotros-vision.jpg";
 ---
 
-<BaseLayout title="Nosotros | Travel Height Elevadores" currentPage="/nosotros/">
+<BaseLayout
+  title="Nosotros | Travel Height Elevadores"
+  description="Conoce a Travel Height: más de 15 años elevando estándares de seguridad vertical en Latinoamérica con ingeniería certificada y un equipo de expertos."
+  image="/images/nosotros-hero.jpg"
+  currentPage="/nosotros/"
+>
   <main>
     <section class="relative bg-navy-deep overflow-hidden hero-clip min-h-[75vh]" style="background-color: #131a33;">
       <div class="absolute inset-0 opacity-40 mix-blend-overlay">
