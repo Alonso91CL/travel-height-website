@@ -1,0 +1,21 @@
+---
+# Despliegue automatico para cPanel (Git Version Control).
+# cPanel ejecuta estas tareas tras cada `git pull` del repositorio.
+#
+# Requisito previo (una sola vez, en cPanel):
+#   1. "Setup Node.js App" -> crear aplicacion con:
+#        - Application root:  la carpeta donde se clona este repo
+#        - Startup file:      server.cjs
+#   2. "Git Version Control" -> clonar este repositorio.
+# Cada deploy posterior: instalar dependencias + build + restart de Passenger.
+deployment:
+  tasks:
+    # Localizar el binario de Node (CloudLinux Node selector / EasyApache)
+    - for d in $(ls -d /opt/alt/alt-nodejs*/root/usr/bin /opt/cpanel/ea-nodejs*/bin 2>/dev/null | sort -V | tail -1); do export PATH=$d:$PATH; done
+    - command -v node >/dev/null || (echo "ERROR: node no encontrado en el servidor"; exit 1)
+    - node --version && npm --version
+    - npm install --no-audit --no-fund
+    - npm run build
+    # Reiniciar la aplicacion Passenger
+    - mkdir -p tmp && touch tmp/restart.txt
+    - echo "Deploy completado: build regenerado y app reiniciada."

@@ -1,6 +1,9 @@
 # build output
 dist/
 
+# passenger restart marker (cpanel)
+tmp/
+
 # generated types
 .astro/
 
@@ -13,12 +16,21 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
-# environment variables
+# environment variables / secrets
 .env
-.env.production
+.env.*
+!.env.example
 
-# macOS-specific files
+# logs
+*.log
+
+# build caches
+*.tsbuildinfo
+
+# OS-specific files
 .DS_Store
+Thumbs.db
+desktop.ini
 
 # jetbrains setting folder
 .idea/

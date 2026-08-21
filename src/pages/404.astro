@@ -1,0 +1,30 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="404 | Página no encontrada" currentPage="/404">
+  <main class="min-h-[70vh] flex items-center justify-center px-margin-mobile md:px-margin-desktop py-section-padding">
+    <div class="max-w-xl w-full text-center">
+      <span class="font-label-bold text-label-sm uppercase tracking-wider text-on-surface-variant">Error</span>
+      <h1 class="font-display-lg text-display-lg text-primary mt-2">404</h1>
+      <h2 class="font-headline-sm text-headline-sm text-primary mt-4">Esta página está fuera de servicio.</h2>
+      <p class="text-on-surface-variant font-body-md mt-4 mb-8">
+        La página que buscas no existe o fue movida. Verifica la dirección o vuelve al inicio.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a
+          href="/"
+          class="inline-flex items-center justify-center gap-2 bg-black text-white font-label-bold text-label-bold px-8 py-4 rounded-xl hover:opacity-80 transition-all hover-lift press"
+        >
+          Volver al Inicio
+        </a>
+        <a
+          href="/cotizacion/"
+          class="inline-flex items-center justify-center gap-2 border border-outline-variant text-primary font-label-bold text-label-bold px-8 py-4 rounded-xl hover:border-electric-cyan transition-all hover-lift press"
+        >
+          Solicitar Cotización
+        </a>
+      </div>
+    </div>
+  </main>
+</BaseLayout>
