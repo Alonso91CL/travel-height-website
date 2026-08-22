@@ -2,17 +2,13 @@
 # Despliegue automatico para cPanel (Git Version Control).
 # Formato oficial: https://docs.cpanel.net/knowledge-base/web-services/guide-to-git-deployment/
 #
-# IMPORTANTE: NO se ejecuta npm install ni astro build aqui. Los hosts
-# compartidos suelen tener limites de RAM (CloudLinux LVE) que hacen OOM
-# al compilar Astro en el servidor ("memory allocation failed", SIGABRT).
-# El build se hace LOCALMENTE y dist/ se sube versionado con el repo.
+# Este repositorio ya NO incluye el build: dist/ esta en .gitignore y el
+# contenido del sitio se entrega por FTP despues de compilar localmente
+# (pnpm build). Los hosts compartidos no tienen RAM para compilar Astro.
 #
-# server.cjs usa solo modulos nativos de Node: no requiere node_modules.
+# Estas tareas solo sincronizan codigo fuente y reinician la app Node si
+# existe (inofensivo en modo estatico con public_html).
 deployment:
   tasks:
-    # Verificar que el build precompilado este presente
-    - 'test -f dist/index.html || (echo "ERROR: falta dist/. Compila localmente (pnpm build) y commitea antes de desplegar."; exit 1)'
-    - 'echo "Build detectado: $(ls dist | wc -l) entradas en dist/"'
-    # Reiniciar la aplicacion Passenger (arranque automatico de server.cjs)
+    - 'echo "Codigo actualizado. Si cambio contenido visible, sube dist/ por FTP."'
     - mkdir -p tmp && touch tmp/restart.txt
-    - 'echo "Deploy completado: app reiniciada sirviendo dist/ precompilado."'

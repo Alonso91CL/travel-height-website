@@ -2,7 +2,7 @@
 
 Sitio corporativo de **Travel Height SPA**, empresa de ingeniería vertical en Chile: instalación, mantenimiento, modernización y emergencias 24/7.
 
-Construido como **sitio 100% estático** con [Astro](https://astro.build) + [Tailwind CSS 4](https://tailwindcss.com), listo para desplegarse en **cPanel (Node.js App / Passenger)** con despliegue automatizado vía Git.
+Construido como **sitio 100% estático** con [Astro](https://astro.build) + [Tailwind CSS 4](https://tailwindcss.com), listo para desplegarse en **cPanel**: el contenido de `dist/` se sube por FTP a `public_html` (o se sirve con el servidor propio `server.cjs`). El código fuente se versiona en Git; el build no.
 
 ## Stack
 
@@ -18,13 +18,14 @@ Construido como **sitio 100% estático** con [Astro](https://astro.build) + [Tai
 /
 ├── public/              # assets estáticos (imágenes, favicon, robots.txt)
 ├── src/
-│   ├── components/      # Hero, Nav, MobileMenu, Footer, FAQ, StatsBar, StepCard
+│   ├── components/      # Hero, Nav, MobileMenu, Footer, FAQ, StepCard
 │   ├── config/site.ts   # configuración central: contacto, WhatsApp, navegación
 │   ├── layouts/BaseLayout.astro   # layout base con SEO y scripts globales
-│   ├── pages/           # index, servicios, emergencias, proyectos, nosotros, cotizacion, 404
+│   ├── pages/           # index, servicios, emergencias, proyectos, nosotros,
+│   │                    # cotizacion, privacidad, terminos, 404
 │   └── styles/global.css
 ├── server.cjs           # servidor estático para Passenger/cPanel
-└── .cpanel.yml          # tareas de despliegue automático
+└── .cpanel.yml          # tareas de despliegue de código vía Git
 ```
 
 ## Comandos
@@ -45,7 +46,9 @@ formas de publicarlo; la Opción A es la más simple y recomendada.
 
 > **Importante:** el build se hace siempre **localmente**, no en el servidor.
 > Los hosts compartidos cPanel tienen límites de RAM (CloudLinux) y compilar
-> Astro allí produce OOM (`memory allocation failed`, SIGABRT).
+> Astro allí produce OOM (`memory allocation failed`, SIGABRT). Por eso
+> `dist/` está en `.gitignore`: se compila localmente y se entrega al
+> servidor por FTP.
 
 ### Opción A — Archivos estáticos en `public_html` (recomendada)
 
@@ -54,22 +57,12 @@ todo directamente; el `.htaccess` incluido en `dist/` aporta 404
 personalizada, gzip, cache, HTTPS y cabeceras de seguridad.
 
 1. Compila: `pnpm build`
-2. Sube el **contenido completo** de `dist/` a `public_html/`
-   (FTP con FileZilla, o Git con las tareas de abajo).
+2. Sube por FTP (FileZilla) el **contenido completo** de `dist/` a `public_html/`
 3. Listo. Si antes existía una app Node registrada para el dominio,
    elimínala en *Setup Node.js App* (si no, Passenger seguiría capturando
    el tráfico del dominio).
 
-Deploy automatizado vía Git (patrón oficial de cPanel): reemplaza las tareas
-de `.cpanel.yml` por:
-
-```yaml
----
-deployment:
-  tasks:
-    - export DEPLOYPATH=/home/USUARIO/public_html/
-    - /bin/cp -R dist/* $DEPLOYPATH
-```
+Para actualizar solo algunas páginas, basta subir los archivos cambiados.
 
 ### Opción B — Aplicación Node.js (Passenger)
 
@@ -92,40 +85,42 @@ Mantiene `server.cjs` como servidor estático. Útil si el hosting bloquea
 
 2. **Git Version Control** → clonar el repositorio con
    Clone Path = `/home/USUARIO/travelheight` (la misma raíz de aplicación).
-3. Botón **Restart** en la app Node (no se necesita Run NPM Install:
+3. Compila localmente (`pnpm build`) y sube por FTP el contenido de
+   `dist/` a `~/travelheight/dist/` (server.cjs sirve esa carpeta).
+4. Botón **Restart** en la app Node (no se necesita Run NPM Install:
    `server.cjs` no tiene dependencias).
-4. Opcional: añadir variable de entorno `NODE_ENV=production`.
+5. Opcional: añadir variable de entorno `NODE_ENV=production`.
 
-### Flujo de publicación (común a ambas)
+### Flujo de trabajo
+
+**Código** (componentes, textos, configuración) viaja por Git; **contenido
+público** (`dist/`) viaja por FTP:
+
+```sh
+# 1. Cambios de código
+git add -A && git commit -m "..." && git push
+
+# 2. En cPanel » Git Version Control » Pull or Deploy:
+#    "Update from Remote" → "Deploy HEAD Commit"
+#    (.cpanel.yml sincroniza el código y reinicia la app Node si existe)
+
+# 3. Si el cambio afecta lo que se ve: compilar y subir por FTP
+pnpm build    # requiere Node >= 22.12
+# → sube dist/ a public_html/ (Opción A) o ~/travelheight/dist/ (Opción B)
+```
 
 Basado en la [guía oficial de Git Deployment de cPanel](https://docs.cpanel.net/knowledge-base/web-services/guide-to-git-deployment/).
 El repositorio necesita: `.cpanel.yml` en la raíz ✅, al menos una rama ✅ y
 **árbol de trabajo limpio**.
 
-```sh
-# 1. Compilar localmente (requiere Node >= 22.12)
-pnpm build
-
-# 2. Versionar el build y subir
-git add -A
-git commit -m "Build"
-git push
-
-# 3. En cPanel » Git Version Control » Pull or Deploy:
-#    "Update from Remote" → "Deploy HEAD Commit"
-```
-
 **Modo push (opcional, sin GitHub):** añade el repositorio del servidor como
-segundo remote y el hook post-receive de cPanel despliega automáticamente:
+segundo remote y el hook post-receive de cPanel despliega el código
+automáticamente:
 
 ```sh
 git remote add production ssh://USUARIO@servidor:PUERTO/home/USUARIO/travelheight
 git push production master
 ```
-
-⚠️ No uses comodines sueltos (`*`) al copiar archivos en `.cpanel.yml`:
-podría desplegar el directorio `.git` y causar problemas graves (advertencia
-oficial). El patrón `dist/*` es seguro porque solo copia esa carpeta.
 
 ## Configuración de contacto
 
