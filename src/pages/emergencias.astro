@@ -1,12 +1,16 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Hero from "../components/Hero.astro";
-import StatsBar from "../components/StatsBar.astro";
 import StepCard from "../components/StepCard.astro";
 import FAQ from "../components/FAQ.astro";
+import { siteConfig, whatsappUrl } from "../config/site";
 
 const controlCenterImg = "/images/control-center.png";
 const mapImg = "/images/map-santiago.png";
+const emergencyTel = `tel:${siteConfig.contact.phone.replace(/\s/g, "")}`;
+const emergencyWhatsapp = whatsappUrl(
+  "Hola, necesito soporte técnico urgente para un ascensor.",
+);
 ---
 
 <BaseLayout
@@ -23,11 +27,9 @@ const mapImg = "/images/map-santiago.png";
       badgeClass="bg-error-container text-on-error-container rounded-full animate-pulse"
       title="Asistencia inmediata para tu seguridad."
       description="Nuestro equipo técnico de élite está en guardia 24/7. Garantizamos un tiempo de respuesta menor a 120 minutos en toda la Región Metropolitana."
-      primaryCta={{ text: "Llamar a Emergencias", href: "tel:800123456", icon: "phone_in_talk", class: "emergency-btn-pulse flex items-center justify-center gap-3 bg-error text-white hover:bg-red-700 shadow-lg" }}
-      secondaryCta={{ text: "Soporte WhatsApp", href: "/cotizacion/", icon: "chat_bubble", class: "border-outline-variant text-primary hover:border-electric-cyan bg-white" }}
+      primaryCta={{ text: "Llamar a Emergencias", href: emergencyTel, icon: "phone_in_talk", class: "emergency-btn-pulse flex items-center justify-center gap-3 bg-error text-white hover:bg-red-700 shadow-lg" }}
+      secondaryCta={{ text: "Soporte WhatsApp", href: emergencyWhatsapp, icon: "chat_bubble", class: "border-outline-variant text-primary hover:border-electric-cyan bg-white" }}
     />
-
-    <StatsBar variant="emergency" />
 
     <StepCard
       title="¿Qué hacer en caso de atrapamiento?"

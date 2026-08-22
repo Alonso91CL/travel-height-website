@@ -1,3 +1,7 @@
+---
+import { siteConfig } from "../config/site";
+---
+
 <footer
   class="w-full px-margin-mobile md:px-margin-desktop py-section-padding grid grid-cols-1 md:grid-cols-4 gap-gutter bg-[#303032] text-surface-bright border-t border-outline-variant"
 >
@@ -106,10 +110,10 @@
       Contacto
     </h4>
     <p class="text-surface-dim mb-4">
-      Av. Central 450, Piso 12<br />
-      Distrito Tecnológico
+      {siteConfig.legalName}<br />
+      {siteConfig.contact.email}
     </p>
-    <p class="text-white font-bold mb-4">+52 (55) 0000 0000</p>
+    <p class="text-white font-bold mb-4">{siteConfig.contact.phone}</p>
     <div class="flex gap-4">
       <a
         class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:bg-white hover:text-navy-deep transition-all"
@@ -129,7 +133,7 @@
     class="md:col-span-4 pt-section-padding border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4"
   >
     <span class="text-surface-dim text-sm">
-      © 2026 Travel Height Elevadores. Todos los derechos reservados.
+      © 2026 {siteConfig.legalName}. Todos los derechos reservados.
     </span>
     <div class="flex gap-8 text-sm text-surface-dim">
       <a class="hover:text-white" href="#">Privacidad</a>

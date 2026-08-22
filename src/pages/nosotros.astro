@@ -1,6 +1,5 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import StatsBar from "../components/StatsBar.astro";
 
 const teamImg = "/images/nosotros-equipo.jpg";
 const installationImg = "/images/nosotros-mision.jpg";
@@ -10,7 +9,7 @@ const visionImg = "/images/nosotros-vision.jpg";
 
 <BaseLayout
   title="Nosotros | Travel Height Elevadores"
-  description="Conoce a Travel Height: más de 15 años elevando estándares de seguridad vertical en Latinoamérica con ingeniería certificada y un equipo de expertos."
+  description="Conoce a Travel Height: más de 15 años elevando estándares de seguridad vertical en Latinoamérica con ingeniería especializada y un equipo de expertos."
   image="/images/nosotros-hero.jpg"
   currentPage="/nosotros/"
 >
@@ -40,8 +39,6 @@ const visionImg = "/images/nosotros-vision.jpg";
         </div>
       </div>
     </section>
-
-    <StatsBar />
 
     <section class="px-margin-mobile md:px-margin-desktop py-section-padding bg-surface reveal" style="background-image: radial-gradient(circle, #e4e2e4 1px, transparent 1px); background-size: 32px 32px;">
       <div class="max-w-container-max mx-auto grid md:grid-cols-12 gap-gutter items-stretch stagger">
@@ -109,37 +106,16 @@ const visionImg = "/images/nosotros-vision.jpg";
       <div class="max-w-container-max mx-auto relative z-10">
         <div class="flex flex-col lg:flex-row gap-stack-lg items-center">
           <div class="lg:w-1/2 text-white">
-            <h2 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg mb-8">Expertiz Técnica Certificada</h2>
+            <h2 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg mb-8">Expertiz Técnica</h2>
             <p class="font-body-lg text-body-lg text-gray-300 mb-12">
               Nuestro equipo está compuesto por ingenieros mecánicos y eléctricos especializados con décadas de experiencia en el mercado chileno. No solo instalamos equipos; diseñamos soluciones de vida para infraestructuras complejas.
             </p>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-stack-md">
-              <div class="flex items-center gap-4 bg-white/10 p-6 rounded-lg border border-white/20">
-                <span class="material-symbols-outlined text-electric-cyan text-3xl" style="font-variation-settings: 'FILL' 1;">verified</span>
-                <div>
-                  <h4 class="font-label-bold text-label-bold">Certificación NCH 440</h4>
-                  <p class="text-xs text-gray-400">Norma Chilena de Ascensores</p>
-                </div>
-              </div>
-              <div class="flex items-center gap-4 bg-white/10 p-6 rounded-lg border border-white/20">
-                <span class="material-symbols-outlined text-electric-cyan text-3xl" style="font-variation-settings: 'FILL' 1;">workspace_premium</span>
-                <div>
-                  <h4 class="font-label-bold text-label-bold">ISO 9001:2015</h4>
-                  <p class="text-xs text-gray-400">Gestión de Calidad Internacional</p>
-                </div>
-              </div>
-              <div class="flex items-center gap-4 bg-white/10 p-6 rounded-lg border border-white/20">
-                <span class="material-symbols-outlined text-electric-cyan text-3xl" style="font-variation-settings: 'FILL' 1;">health_and_safety</span>
-                <div>
-                  <h4 class="font-label-bold text-label-bold">Mutual de Seguridad</h4>
-                  <p class="text-xs text-gray-400">Altos estándares de prevención</p>
-                </div>
-              </div>
+            <div class="grid grid-cols-1 gap-stack-md">
               <div class="flex items-center gap-4 bg-white/10 p-6 rounded-lg border border-white/20">
                 <span class="material-symbols-outlined text-electric-cyan text-3xl" style="font-variation-settings: 'FILL' 1;">construction</span>
                 <div>
-                  <h4 class="font-label-bold text-label-bold">Registro MINVU</h4>
-                  <p class="text-xs text-gray-400">Proveedores de alta categoría</p>
+                  <h4 class="font-label-bold text-label-bold">Registro MINVU N° 387</h4>
+                  <p class="text-xs text-gray-400">Ministerio de Vivienda y Urbanismo</p>
                 </div>
               </div>
             </div>
