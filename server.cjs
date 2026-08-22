@@ -16,6 +16,12 @@ const RAW_HOST = process.env.HOST || "";
 const IS_SAFE_HOST = /^(127\.|localhost$|0\.0\.0\.0$|::1$)/.test(RAW_HOST);
 const HOST = IS_SAFE_HOST ? RAW_HOST : "127.0.0.1";
 
+// Host canonico: todo trafico externo deriva a https://www.travelheight.cl
+// (igual que el .htaccess para el modo estatico). Detras de LiteSpeed/Passenger
+// el esquema real llega en X-Forwarded-Proto.
+const CANONICAL_HOST = "www.travelheight.cl";
+const IS_LOCAL = /^(localhost|0\.0\.0\.0|(?:\d{1,3}\.){3}\d{1,3}|\[::1\]|::1)(:\d+)?$/i;
+
 const MIME = {
   ".html": "text/html; charset=utf-8",
   ".css": "text/css; charset=utf-8",
@@ -85,6 +91,22 @@ function resolveFile(urlPath, callback) {
 }
 
 const server = http.createServer((req, res) => {
+  // Redirect canonico (solo trafico externo; el acceso local nunca redirige)
+  const reqHost = String(req.headers.host || "");
+  if (!IS_LOCAL.test(reqHost)) {
+    const proto = String(req.headers["x-forwarded-proto"] || "http")
+      .split(",")[0]
+      .trim();
+    const bareHost = reqHost.split(":")[0].toLowerCase();
+    if (proto !== "https" || bareHost !== CANONICAL_HOST) {
+      res.writeHead(301, {
+        Location: `https://${CANONICAL_HOST}${req.url}`,
+        "Content-Type": "text/plain; charset=utf-8",
+      });
+      return res.end();
+    }
+  }
+
   // Solo GET/HEAD
   if (req.method !== "GET" && req.method !== "HEAD") {
     res.writeHead(405, { Allow: "GET, HEAD" });

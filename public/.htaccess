@@ -5,11 +5,14 @@ AddDefaultCharset UTF-8
 # Pagina 404 personalizada (dist/404.html generado por Astro)
 ErrorDocument 404 /404.html
 
-# Forzar HTTPS (el certificado del dominio ya es valido)
+# Canonicalizacion: TODO deriva a https://www.travelheight.cl
+# (http://sin-www, http://con-www y https://sin-www -> una sola forma canonica,
+# consistente con siteConfig.url, el sitemap y las meta etiquetas)
 <IfModule mod_rewrite.c>
   RewriteEngine On
-  RewriteCond %{HTTPS} off
-  RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+  RewriteCond %{HTTPS} off [OR]
+  RewriteCond %{HTTP_HOST} !^www\.travelheight\.cl$ [NC]
+  RewriteRule ^(.*)$ https://www.travelheight.cl/$1 [L,R=301]
 </IfModule>
 
 # Compresion gzip
