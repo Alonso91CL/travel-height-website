@@ -1,0 +1,122 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { siteConfig } from "../config/site";
+---
+
+<BaseLayout
+  title="Términos y Condiciones | Travel Height Elevadores"
+  description="Términos y condiciones de uso del sitio web de Travel Height SpA. Información legal sobre servicios de elevación, cotizaciones y uso de este sitio."
+  currentPage="/terminos/"
+>
+  <main>
+    <section class="relative bg-navy-deep overflow-hidden hero-clip min-h-[45vh]" style="background-color: #131a33;">
+      <div class="absolute inset-0 bg-gradient-to-r from-black/60 via-black/30 to-transparent"></div>
+      <div class="relative z-10 px-margin-mobile md:px-margin-desktop pt-32 pb-16 max-w-container-max mx-auto">
+        <div class="max-w-2xl">
+          <span class="font-label-bold text-label-sm text-electric-cyan uppercase tracking-[0.2em] mb-4 block">Legal</span>
+          <h1 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg text-white mb-4">
+            Términos y Condiciones
+          </h1>
+          <p class="font-body-lg text-body-lg text-gray-300">
+            Última actualización: agosto de 2026
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="px-margin-mobile md:px-margin-desktop py-section-padding bg-surface">
+      <div class="max-w-3xl mx-auto space-y-stack-lg">
+        <div>
+          <h2 class="font-headline-sm text-headline-sm text-primary mb-4">1. Objeto y aceptación</h2>
+          <p class="text-on-surface-variant font-body-md leading-relaxed">
+            Estos términos regulan el acceso y uso del sitio web {siteConfig.url}, titularidad de {siteConfig.legalName} (en adelante, “Travel Height”). Al navegar este sitio o utilizar sus formularios, declaras haber leído y aceptado estos términos en su totalidad.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="font-headline-sm text-headline-sm text-primary mb-4">2. Naturaleza informativa del sitio</h2>
+          <p class="text-on-surface-variant font-body-md leading-relaxed">
+            El contenido de este sitio es <strong>meramente informativo</strong> y no constituye una oferta vinculante, asesoría técnica ni presupuesto. Todo servicio requiere evaluación técnica previa y se formaliza exclusivamente mediante documentos contractuales específicos (cotización formal, orden de servicio o contrato), que prevalecerán sobre cualquier información publicada aquí.
+          </p>
+        </div>
+
+        <div class="bg-error-container rounded-xl p-6 md:p-8">
+          <h2 class="font-headline-sm text-headline-sm mb-3 flex items-center gap-2">
+            <span class="material-symbols-outlined">emergency</span> 3. Advertencia sobre emergencias
+          </h2>
+          <p class="font-body-md leading-relaxed">
+            Este sitio web <strong>no es un canal de emergencia en tiempo real</strong>. Si una persona se encuentra atrapada en un ascensor, activa primero el botón de alarma del equipo o comunícate con la conserjería del edificio, y luego llama a nuestra línea de atención al
+            <a class="font-bold underline" href={`tel:${siteConfig.contact.phone.replace(/\s/g, "")}`}>{siteConfig.contact.phone}</a>.
+            Los mensajes enviados por formulario o WhatsApp no garantizan respuesta inmediata.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="font-headline-sm text-headline-sm text-primary mb-4">4. Uso permitido</h2>
+          <ul class="list-disc list-inside text-on-surface-variant font-body-md leading-relaxed space-y-2">
+            <li>Usarás el sitio con fines lícitos, personales o empresariales relacionados con nuestros servicios.</li>
+            <li>No intentarás vulnerar la seguridad del sitio, extraer datos masivamente, ni alterar su contenido o funcionamiento.</li>
+            <li>No enviarás a través de los formularios información falsa, datos sensibles de terceros sin autorización, ni contenido ilícito u ofensivo.</li>
+            <li>Eres responsable de la veracidad de los datos que nos proporcionas.</li>
+          </ul>
+        </div>
+
+        <div>
+          <h2 class="font-headline-sm text-headline-sm text-primary mb-4">5. Propiedad intelectual</h2>
+          <p class="text-on-surface-variant font-body-md leading-relaxed">
+            Los textos, diseños, logotipos e imágenes de este sitio son propiedad de Travel Height o de sus respectivos titulares, y están protegidos por la legislación chilena e internacional. Queda prohibida su reproducción total o parcial sin autorización escrita. El nombre “Travel Height” y su identidad visual no pueden utilizarse sin consentimiento previo.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="font-headline-sm text-headline-sm text-primary mb-4">6. Exactitud de la información</h2>
+          <p class="text-on-surface-variant font-body-md leading-relaxed">
+            Buscamos que el contenido sea preciso y actualizado; no obstante, podría contener imprecisiones u quedar desactualizado. Travel Height podrá modificar, corregir o eliminar contenidos en cualquier momento y sin aviso previo. Las especificaciones técnicas y alcances de cada servicio se confirman únicamente en la documentación contractual.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="font-headline-sm text-headline-sm text-primary mb-4">7. Enlaces a sitios de terceros</h2>
+          <p class="text-on-surface-variant font-body-md leading-relaxed">
+            Este sitio contiene enlaces a servicios de terceros, como WhatsApp (Meta Platforms) para el envío de mensajes. No controlamos esas plataformas ni respondemos por sus contenidos, políticas o prácticas; su uso está sujeto a los términos de cada proveedor.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="font-headline-sm text-headline-sm text-primary mb-4">8. Limitación de responsabilidad</h2>
+          <p class="text-on-surface-variant font-body-md leading-relaxed">
+            En la máxima medida permitida por la ley, Travel Height no será responsable por daños derivados de (i) la imposibilidad de acceder al sitio, (ii) decisiones tomadas sobre la base de la información publicada sin evaluación técnica presencial, ni (iii) fallas de redes, servidores o servicios de terceros. Nuestra responsabilidad frente a clientes se rige exclusivamente por los contratos respectivos.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="font-headline-sm text-headline-sm text-primary mb-4">9. Tratamiento de datos personales</h2>
+          <p class="text-on-surface-variant font-body-md leading-relaxed">
+            El tratamiento de tus datos personales se rige por nuestra <a class="text-primary hover:underline" href="/privacidad/">Política de Privacidad</a>, elaborada conforme a la Ley N° 21.719 sobre Protección de Datos Personales, la que forma parte integrante de estos términos.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="font-headline-sm text-headline-sm text-primary mb-4">10. Legislación aplicable y jurisdicción</h2>
+          <p class="text-on-surface-variant font-body-md leading-relaxed">
+            Estos términos se rigen por las leyes de la República de Chile. Cualquier controversia derivada de su interpretación o aplicación será resuelta por los tribunales ordinarios de justicia de Santiago, Chile, salvo las reglas especiales de competencia aplicables según la ley procesal.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="font-headline-sm text-headline-sm text-primary mb-4">11. Modificaciones</h2>
+          <p class="text-on-surface-variant font-body-md leading-relaxed">
+            Travel Height puede actualizar estos términos en cualquier momento. La versión vigente es la publicada en esta página, con su fecha de última actualización. El uso continuado del sitio tras una modificación implica su aceptación.
+          </p>
+        </div>
+
+        <div class="pt-4 border-t border-outline-variant/40">
+          <p class="text-on-surface-variant font-body-md">
+            ¿Consultas legales sobre estos términos? Escríbenos a
+            <a class="text-primary hover:underline" href={`mailto:${siteConfig.contact.email}`}>{siteConfig.contact.email}</a>.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+</BaseLayout>

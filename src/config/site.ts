@@ -1,5 +1,5 @@
 export const siteConfig = {
-  name: "Travel Height Elevadores",
+  name: "Travel Height SpA",
   shortName: "Travel Height",
   legalName: "Travel Height SpA",
   url: "https://www.travelheight.cl",

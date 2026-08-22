@@ -1,0 +1,155 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { siteConfig } from "../config/site";
+---
+
+<BaseLayout
+  title="Política de Privacidad | Travel Height Elevadores"
+  description="Política de privacidad y tratamiento de datos personales de Travel Height SpA, preparada conforme a la Ley N° 21.719 sobre Protección de Datos Personales de Chile."
+  currentPage="/privacidad/"
+>
+  <main>
+    <section class="relative bg-navy-deep overflow-hidden hero-clip min-h-[45vh]" style="background-color: #131a33;">
+      <div class="absolute inset-0 bg-gradient-to-r from-black/60 via-black/30 to-transparent"></div>
+      <div class="relative z-10 px-margin-mobile md:px-margin-desktop pt-32 pb-16 max-w-container-max mx-auto">
+        <div class="max-w-2xl">
+          <span class="font-label-bold text-label-sm text-electric-cyan uppercase tracking-[0.2em] mb-4 block">Legal</span>
+          <h1 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg text-white mb-4">
+            Política de Privacidad
+          </h1>
+          <p class="font-body-lg text-body-lg text-gray-300">
+            Última actualización: agosto de 2026
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="px-margin-mobile md:px-margin-desktop py-section-padding bg-surface">
+      <div class="max-w-3xl mx-auto space-y-stack-lg">
+        <div class="bg-surface-container-low border-l-4 border-primary rounded-xl p-6 md:p-8">
+          <p class="text-on-surface-variant font-body-md">
+            Esta política se elaboró conforme a la <strong>Ley N° 21.719</strong> que Regula la Protección y el Tratamiento de los Datos Personales y crea la Agencia de Protección de Datos Personales, publicada en el Diario Oficial el 13 de diciembre de 2024 y con vigencia plena desde el <strong>1 de diciembre de 2026</strong>, que reforma la Ley N° 19.628. Mientras dicha vigencia se materializa, aplicamos estos mismos estándares como buena práctica.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="font-headline-sm text-headline-sm text-primary mb-4">1. Responsable del tratamiento</h2>
+          <p class="text-on-surface-variant font-body-md leading-relaxed mb-3">
+            {siteConfig.legalName} (en adelante, “Travel Height”), con domicilio en Chile, es responsable del tratamiento de los datos personales recabados a través de este sitio web ({siteConfig.url}) y de los canales de contacto asociados.
+          </p>
+          <p class="text-on-surface-variant font-body-md leading-relaxed">
+            Canal de contacto para materias de privacidad: <a class="text-primary hover:underline" href={`mailto:${siteConfig.contact.email}`}>{siteConfig.contact.email}</a>.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="font-headline-sm text-headline-sm text-primary mb-4">2. Datos que recopilamos</h2>
+          <ul class="list-disc list-inside text-on-surface-variant font-body-md leading-relaxed space-y-2">
+            <li><strong>Datos de contacto:</strong> nombre, correo electrónico y teléfono, cuando los ingreses voluntariamente en nuestros formularios de contacto o cotización.</li>
+            <li><strong>Datos del requerimiento:</strong> información sobre tu edificio, equipo o necesidad técnica que decidas incluir en tu mensaje.</li>
+            <li><strong>Datos entregados por canales externos:</strong> los que nos proporcionas al comunicarte por teléfono o WhatsApp.</li>
+            <li><strong>Datos técnicos básicos:</strong> registros estándar de acceso del servidor (dirección IP, tipo de navegador) necesarios para operar y asegurar el sitio; no utilizamos herramientas de rastreo publicitario.</li>
+          </ul>
+          <p class="text-on-surface-variant font-body-md leading-relaxed mt-3">
+            No solicitamos datos sensibles (origen étnico, salud, ideología, entre otros). Te pedimos no incluirlos en formularios o mensajes.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="font-headline-sm text-headline-sm text-primary mb-4">3. Finalidades del tratamiento</h2>
+          <ul class="list-disc list-inside text-on-surface-variant font-body-md leading-relaxed space-y-2">
+            <li>Responder solicitudes de información, cotización o soporte técnico.</li>
+            <li>Coordinar visitas técnicas, presupuestos y servicios contratados.</li>
+            <li>Gestionar emergencias reportadas por los canales habilitados.</li>
+            <li>Cumplir obligaciones legales, contables y contractuales derivadas de servicios efectivamente prestados.</li>
+          </ul>
+          <p class="text-on-surface-variant font-body-md leading-relaxed mt-3">
+            No utilizamos tus datos para publicidad dirigida, ni los cedemos o vendemos a terceros con fines comerciales.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="font-headline-sm text-headline-sm text-primary mb-4">4. Base de licitud</h2>
+          <p class="text-on-surface-variant font-body-md leading-relaxed">
+            El tratamiento de tus datos se sustenta en tu <strong>consentimiento</strong>, otorgado de forma libre, específica, informada e inequívoca al enviar un formulario o contactarnos, así como en la <strong>ejecución de medidas precontractuales o contractuales</strong> cuando solicitas o contratas un servicio, y en el <strong>interés legítimo</strong> de mantener la seguridad y disponibilidad del sitio.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="font-headline-sm text-headline-sm text-primary mb-4">5. Conservación y eliminación</h2>
+          <p class="text-on-surface-variant font-body-md leading-relaxed">
+            Conservamos tus datos solo por el tiempo necesario para atender tu solicitud y, si contratas servicios, mientras dure la relación comercial y las obligaciones legales asociadas. Cumplido ese plazo, los datos se eliminan o anonimizan de forma segura.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="font-headline-sm text-headline-sm text-primary mb-4">6. Cesión a terceros</h2>
+          <p class="text-on-surface-variant font-body-md leading-relaxed">
+            No cedemos datos personales salvo obligación legal o cuando resulte necesario para prestar el servicio que solicitaste. El sitio utiliza proveedores tecnológicos de infraestructura y mensajería (por ejemplo, WhatsApp como canal de contacto), que tratan datos limitadamente conforme a sus propias políticas.
+          </p>
+        </div>
+
+        <div id="cookies">
+          <h2 class="font-headline-sm text-headline-sm text-primary mb-4">7. Cookies</h2>
+          <p class="text-on-surface-variant font-body-md leading-relaxed">
+            Este sitio es informativo y estático: <strong>no instala cookies de seguimiento, análisis ni publicidad</strong>. Solo podrían existir cookies técnicas imprescindibles para la navegación. Las tipografías e iconos se cargan desde redes de distribución de contenido que pueden registrar técnicamente tu dirección IP durante la carga.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="font-headline-sm text-headline-sm text-primary mb-4">8. Menores de edad</h2>
+          <p class="text-on-surface-variant font-body-md leading-relaxed">
+            El sitio está dirigido a personas mayores de edad. Conforme al artículo 3° de la Ley N° 21.719, el tratamiento de datos de menores de 16 años requiere el consentimiento de sus padres o representantes legales.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="font-headline-sm text-headline-sm text-primary mb-4">9. Tus derechos</h2>
+          <p class="text-on-surface-variant font-body-md leading-relaxed mb-3">
+            De acuerdo con el artículo 4° de la Ley N° 21.719, puedes ejercer en cualquier momento, de manera gratuita, personal e irrenunciable, los siguientes derechos:
+          </p>
+          <ul class="grid grid-cols-1 sm:grid-cols-2 gap-gutter mb-4">
+            <li class="flex items-center gap-2 bg-surface-container-low rounded-lg p-3"><span class="material-symbols-outlined text-electric-cyan">visibility</span><span class="font-label-bold text-label-bold">Acceso</span></li>
+            <li class="flex items-center gap-2 bg-surface-container-low rounded-lg p-3"><span class="material-symbols-outlined text-electric-cyan">edit</span><span class="font-label-bold text-label-bold">Rectificación</span></li>
+            <li class="flex items-center gap-2 bg-surface-container-low rounded-lg p-3"><span class="material-symbols-outlined text-electric-cyan">delete</span><span class="font-label-bold text-label-bold">Supresión</span></li>
+            <li class="flex items-center gap-2 bg-surface-container-low rounded-lg p-3"><span class="material-symbols-outlined text-electric-cyan">block</span><span class="font-label-bold text-label-bold">Oposición</span></li>
+            <li class="flex items-center gap-2 bg-surface-container-low rounded-lg p-3"><span class="material-symbols-outlined text-electric-cyan">sync_alt</span><span class="font-label-bold text-label-bold">Portabilidad</span></li>
+            <li class="flex items-center gap-2 bg-surface-container-low rounded-lg p-3"><span class="material-symbols-outlined text-electric-cyan">lock</span><span class="font-label-bold text-label-bold">Bloqueo</span></li>
+          </ul>
+          <p class="text-on-surface-variant font-body-md leading-relaxed">
+            Para ejercerlos, envía tu solicitud a <a class="text-primary hover:underline" href={`mailto:${siteConfig.contact.email}`}>{siteConfig.contact.email}</a> indicando tu nombre y el derecho que deseas ejercer. Responderemos dentro del plazo legal. Si tu solicitud no es respondida o no queda satisfecha, podrás reclamar ante la Agencia de Protección de Datos Personales.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="font-headline-sm text-headline-sm text-primary mb-4">10. Autoridad fiscalizadora</h2>
+          <p class="text-on-surface-variant font-body-md leading-relaxed">
+            La autoridad encargada de fiscalizar el cumplimiento de la normativa chilena de protección de datos es la <strong>Agencia de Protección de Datos Personales</strong>, organismo autónomo creado por la Ley N° 21.719, cuyo funcionamiento pleno se materializa junto con la entrada en vigencia de la ley el 1 de diciembre de 2026.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="font-headline-sm text-headline-sm text-primary mb-4">11. Seguridad</h2>
+          <p class="text-on-surface-variant font-body-md leading-relaxed">
+            Aplicamos medidas técnicas y organizativas razonables para proteger tus datos contra pérdida, uso indebido o acceso no autorizado, incluyendo cifrado TLS en todo el tráfico del sitio y acceso restringido a la información de contacto recibida.
+          </p>
+        </div>
+
+        <div>
+          <h2 class="font-headline-sm text-headline-sm text-primary mb-4">12. Actualizaciones de esta política</h2>
+          <p class="text-on-surface-variant font-body-md leading-relaxed">
+            Podremos actualizar esta política para reflejar cambios normativos u operativos. Publicaremos aquí la versión vigente con su fecha de actualización. Los cambios sustanciales serán comunicados por los medios de contacto disponibles.
+          </p>
+        </div>
+
+        <div class="pt-4 border-t border-outline-variant/40">
+          <p class="text-on-surface-variant font-body-md">
+            ¿Consultas sobre esta política? Escríbenos a
+            <a class="text-primary hover:underline" href={`mailto:${siteConfig.contact.email}`}>{siteConfig.contact.email}</a>
+            o llámanos al <a class="text-primary hover:underline" href={`tel:${siteConfig.contact.phone.replace(/\s/g, "")}`}>{siteConfig.contact.phone}</a>.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+</BaseLayout>
