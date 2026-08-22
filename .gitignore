@@ -45,3 +45,9 @@ image.png
 
 # stitch design reference (not part of the project)
 stitch-demo/
+
+# skills y tooling local de agentes IA (ver AGENTS.md para el listado)
+.agents/
+.claude/
+.opencode/
+skills-lock.json

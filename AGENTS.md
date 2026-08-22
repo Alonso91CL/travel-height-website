@@ -47,6 +47,23 @@ Gotchas:
 
 Sin backend: los formularios de contacto/cotización abren una conversación de WhatsApp prellenada vía `wa.me` usando `whatsappUrl()` de `src/config/site.ts`. No esperar POSTs ni crear endpoints.
 
+## Skills de agentes instaladas
+
+Este proyecto usa skills locales (carpetas `.agents/skills/`, ignoradas por git — **no viajan con el repo**). Si se clona o despliega en otro entorno, reinstalarlas con el CLI de skills (`npx skills add <owner/repo>@<skill> -y`, instala local sin `-g`):
+
+| Skill | Fuente | Uso en este repo |
+|---|---|---|
+| `seo-audit` | `coreyhaines31/marketingskills` | Auditorías técnicas y on-page SEO |
+| `copywriting` | `coreyhaines31/marketingskills` | Redacción de copy del sitio |
+| `ai-seo` | `coreyhaines31/marketingskills` | Optimización para citación por IA (GEO) |
+| `content-strategy` | `coreyhaines31/marketingskills` | Planificación de contenido |
+| `web-design-guidelines` | `vercel-labs/agent-skills` | Revisión de UI/accesibilidad |
+| `seo-aeo-best-practices` | `sanity-io/agent-toolkit` | Metadata, JSON-LD, EEAT |
+| `seo-geo` | `resciencelab/opc-skills` | SEO + GEO (schemas, keywords) |
+| `seo` | `addyosmani/web-quality-skills` | SEO técnico/calidad web |
+
+Nota: la capa SEO/GEO/AEO implementada (componentes en `src/components/seo/`, `llms.txt`, schemas) se apoyó en estas skills; los archivos generados SÍ se versionan.
+
 ## Entorno local (Windows)
 
 - Shell: PowerShell 5.1 — no soporta `??` ni `&&`; encadenar con `; if ($?) { ... }`.
