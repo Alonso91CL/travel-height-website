@@ -1,0 +1,21 @@
+---
+export interface Props {
+  question: string;
+  answer: string;
+}
+
+const { question, answer } = Astro.props;
+---
+
+<section
+  class="bg-surface-container-low px-margin-mobile md:px-margin-desktop py-section-padding reveal"
+>
+  <div class="max-w-3xl mx-auto">
+    <h2 class="font-headline-md text-headline-md text-primary mb-4">
+      {question}
+    </h2>
+    <p class="text-on-surface-variant font-body-lg text-body-lg leading-relaxed">
+      {answer}
+    </p>
+  </div>
+</section>

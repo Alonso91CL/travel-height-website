@@ -1,11 +1,25 @@
 ---
+import JsonLd from "./seo/JsonLd.astro";
+
 export interface Props {
   items: Array<{ question: string; answer: string }>;
   title: string;
   description: string;
 }
 const { items, title, description } = Astro.props;
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: items.map((item) => ({
+    "@type": "Question",
+    name: item.question,
+    acceptedAnswer: { "@type": "Answer", text: item.answer },
+  })),
+};
 ---
+
+<JsonLd data={faqSchema} />
 
 <section class="bg-surface-container-low px-margin-mobile md:px-margin-desktop py-section-padding reveal">
   <div class="max-w-3xl mx-auto">

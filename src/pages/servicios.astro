@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Hero from "../components/Hero.astro";
+import ServiceSchema from "../components/seo/ServiceSchema.astro";
 
 const bgImage = "/images/servicios-hero.jpg";
 const serviceImg = "/images/servicios-instalacion.jpg";
@@ -14,6 +15,31 @@ const processImg = "/images/servicios-proceso.jpg";
   image="/images/servicios-hero.jpg"
   currentPage="/servicios/"
 >
+  <ServiceSchema
+    services={[
+      {
+        name: "Instalación de ascensores",
+        description:
+          "Montaje profesional de sistemas de elevación de última generación con protocolos de seguridad de grado industrial, eficiencia energética A+ e integración IoT.",
+      },
+      {
+        name: "Mantenimiento de ascensores",
+        description:
+          "Programas de mantenimiento preventivo y correctivo para asegurar la máxima disponibilidad y vida útil de los equipos de transporte vertical.",
+      },
+      {
+        name: "Modernización de ascensores",
+        description:
+          "Actualización tecnológica de equipos existentes para cumplir nuevas normativas y mejorar la seguridad, el confort y la eficiencia energética.",
+      },
+      {
+        name: "Emergencias de ascensores 24/7",
+        description:
+          "Respuesta inmediata ante fallas críticas o atrapamientos, con equipo técnico de guardia disponible los 365 días del año.",
+        url: "/emergencias/",
+      },
+    ]}
+  />
   <main>
     <Hero
       backgroundImage={bgImage}

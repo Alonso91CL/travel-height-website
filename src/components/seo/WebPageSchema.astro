@@ -1,0 +1,30 @@
+---
+import JsonLd from "./JsonLd.astro";
+import { siteConfig } from "../../config/site";
+
+export interface Props {
+  /** Tipo de página schema.org: WebPage, ContactPage, AboutPage, etc. */
+  type?: string;
+  name: string;
+  description?: string;
+}
+
+const { type = "WebPage", name, description } = Astro.props;
+const url = Astro.site
+  ? new URL(Astro.url.pathname, Astro.site).href
+  : `${siteConfig.url}${Astro.url.pathname}`;
+---
+
+<JsonLd
+  data={{
+    "@context": "https://schema.org",
+    "@type": type,
+    "@id": `${url}#webpage`,
+    url,
+    name,
+    description,
+    inLanguage: "es-CL",
+    isPartOf: { "@id": `${siteConfig.url}/#website` },
+    about: { "@id": `${siteConfig.url}/#organization` },
+  }}
+/>

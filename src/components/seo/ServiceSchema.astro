@@ -1,0 +1,27 @@
+---
+import JsonLd from "./JsonLd.astro";
+import { siteConfig } from "../../config/site";
+
+export interface ServiceItem {
+  name: string;
+  description: string;
+  url?: string;
+}
+
+export interface Props {
+  services: Array<ServiceItem>;
+}
+
+const { services } = Astro.props;
+
+const graph = services.map((service) => ({
+  "@type": "Service",
+  name: service.name,
+  description: service.description,
+  ...(service.url ? { url: new URL(service.url, siteConfig.url).href } : {}),
+  provider: { "@id": `${siteConfig.url}/#organization` },
+  areaServed: siteConfig.areaServed,
+}));
+---
+
+<JsonLd data={{ "@context": "https://schema.org", "@graph": graph }} />

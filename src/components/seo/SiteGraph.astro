@@ -1,0 +1,76 @@
+---
+import JsonLd from "./JsonLd.astro";
+import { siteConfig } from "../../config/site";
+
+const telephoneE164 = `+${siteConfig.contact.whatsapp}`;
+const orgId = `${siteConfig.url}/#organization`;
+const websiteId = `${siteConfig.url}/#website`;
+
+const graph: Array<Record<string, unknown>> = [
+  {
+    "@type": ["Organization", "HomeAndConstructionBusiness"],
+    "@id": orgId,
+    name: siteConfig.name,
+    legalName: siteConfig.legalName,
+    url: `${siteConfig.url}/`,
+    logo: new URL("/images/logo.png", siteConfig.url).href,
+    image: new URL(siteConfig.ogImage, siteConfig.url).href,
+    description: siteConfig.description,
+    telephone: telephoneE164,
+    email: siteConfig.contact.email,
+    address: {
+      "@type": "PostalAddress",
+      ...siteConfig.contact.addressStructured,
+    },
+    areaServed: siteConfig.areaServed,
+    identifier: {
+      "@type": "PropertyValue",
+      name: "Registro MINVU",
+      value: siteConfig.minvuRegistry,
+    },
+    knowsAbout: siteConfig.knowsAbout,
+    contactPoint: [
+      {
+        "@type": "ContactPoint",
+        contactType: "customer service",
+        telephone: telephoneE164,
+        email: siteConfig.contact.email,
+        areaServed: "CL",
+        availableLanguage: ["es"],
+      },
+      {
+        "@type": "ContactPoint",
+        contactType: "emergency",
+        telephone: telephoneE164,
+        areaServed: "CL",
+        availableLanguage: ["es"],
+        hoursAvailable: {
+          "@type": "OpeningHoursSpecification",
+          dayOfWeek: [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday",
+            "Sunday",
+          ],
+          opens: "00:00",
+          closes: "23:59",
+        },
+      },
+    ],
+  },
+  {
+    "@type": "WebSite",
+    "@id": websiteId,
+    url: `${siteConfig.url}/`,
+    name: siteConfig.name,
+    alternateName: siteConfig.shortName,
+    inLanguage: "es-CL",
+    publisher: { "@id": orgId },
+  },
+];
+---
+
+<JsonLd data={{ "@context": "https://schema.org", "@graph": graph }} />

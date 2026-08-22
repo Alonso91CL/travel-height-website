@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import WebPageSchema from "../components/seo/WebPageSchema.astro";
 
 const teamImg = "/images/nosotros-equipo.jpg";
 const installationImg = "/images/nosotros-mision.jpg";
@@ -13,6 +14,11 @@ const visionImg = "/images/nosotros-vision.jpg";
   image="/images/nosotros-hero.jpg"
   currentPage="/nosotros/"
 >
+  <WebPageSchema
+    type="AboutPage"
+    name="Nosotros | Travel Height SpA"
+    description="Conoce a Travel Height: más de 30 años elevando estándares de seguridad vertical en Chile con ingeniería especializada y un equipo de expertos."
+  />
   <main>
     <section class="relative bg-navy-deep overflow-hidden hero-clip min-h-[75vh]" style="background-color: #131a33;">
       <div class="absolute inset-0 opacity-40 mix-blend-overlay">
