@@ -39,5 +39,8 @@ desktop.ini
 # local screenshots / notes (not project assets)
 image.png
 
+# docs locales (cuestionarios, notas, borradores) - no se versionan
+.docs/
+
 # stitch design reference (not part of the project)
 stitch-demo/
