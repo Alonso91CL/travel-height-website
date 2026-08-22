@@ -1,4 +1,4 @@
-# Travel Height Elevadores — Sitio Web
+# Travel Height SpA — Sitio Web
 
 Sitio corporativo de **Travel Height SPA**, empresa de ingeniería vertical en Chile: instalación, mantenimiento, modernización y emergencias 24/7.
 

@@ -4,7 +4,7 @@ export const siteConfig = {
   legalName: "Travel Height SpA",
   url: "https://www.travelheight.cl",
   description:
-    "Expertos en ingeniería de elevación vertical con más de 15 años de experiencia. Instalación, mantenimiento y modernización de elevadores con seguridad certificada y servicio 24/7 en Chile.",
+    "Expertos en ingeniería de elevación vertical con más de 30 años de experiencia. Instalación, mantenimiento y modernización de elevadores con seguridad certificada y servicio 24/7 en Chile.",
   locale: "es_CL",
   ogImage: "/images/hero-bg.png",
   minvuRegistry: "387",
