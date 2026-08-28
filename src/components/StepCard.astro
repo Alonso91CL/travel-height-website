@@ -12,10 +12,11 @@ export interface Props {
 }
 const { steps, title, description, columns = 3 } = Astro.props;
 const colClass = {
-  2: "md:grid-cols-2",
-  3: "md:grid-cols-3",
-  4: "md:grid-cols-4",
+  2: "sm:grid-cols-2",
+  3: "sm:grid-cols-2 lg:grid-cols-3",
+  4: "sm:grid-cols-2 lg:grid-cols-4",
 }[columns];
+const isThreeCards = columns === 3 && steps.length === 3;
 ---
 
 <section class="px-margin-mobile md:px-margin-desktop py-section-padding reveal">
@@ -25,8 +26,11 @@ const colClass = {
       <p class="text-on-surface-variant font-body-md">{description}</p>
     </div>
     <div class:list={["grid grid-cols-1", colClass, "gap-gutter stagger"]}>
-      {steps.map((step) => (
-        <div class="group bg-white p-10 rounded-2xl ambient-shadow border-b-4 border-transparent hover:border-electric-cyan transition-all hover-lift">
+      {steps.map((step, i) => (
+        <div class:list={[
+          "group bg-white p-10 rounded-2xl ambient-shadow border-b-4 border-transparent hover:border-electric-cyan transition-all hover-lift",
+          { "sm:col-span-2 lg:col-span-1": isThreeCards && i === 2 },
+        ]}>
           {step.icon && (
             <div class="w-14 h-14 bg-secondary-container rounded-xl flex items-center justify-center mb-6 text-primary group-hover:scale-110 transition-transform">
               <span class="material-symbols-outlined text-3xl">{step.icon}</span>

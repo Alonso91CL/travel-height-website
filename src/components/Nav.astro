@@ -5,7 +5,7 @@ export interface Props {
   currentPage?: string;
 }
 const { currentPage = "/" } = Astro.props;
-const logoUrl = "/images/logo.png";
+const logoUrl = "/images/logo_travel_height.webp";
 ---
 
 <header
@@ -15,15 +15,14 @@ const logoUrl = "/images/logo.png";
   <div
     class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop flex justify-between items-center h-20"
   >
-    <a href="/" class="flex items-center gap-2">
+    <a href="/" class="flex gap-2.5 items-center">
       <img
         src={logoUrl}
         alt="Travel Height Logo"
-        class="h-12 w-auto object-contain"
-        style="width: 180px;"
+        class="h-auto w-24 object-contain"
       />
     </a>
-    <nav class="hidden md:flex items-center gap-stack-lg">
+    <nav class="hidden lg:flex items-center gap-stack-lg">
       {navLinks.map((link) => (
         <a
           href={link.href}
@@ -39,12 +38,12 @@ const logoUrl = "/images/logo.png";
     <div class="flex items-center gap-4">
       <a
         href="/cotizacion/"
-        class="hidden sm:inline-block bg-black text-white px-6 py-2.5 rounded-lg font-label-bold text-label-bold hover:opacity-80 transition-all active:scale-95 press"
+        class="hidden lg:inline-block bg-black text-white px-6 py-2.5 rounded-lg font-label-bold text-label-bold hover:opacity-80 transition-all active:scale-95 press"
       >
         Cotizar
       </a>
       <button
-        class="md:hidden text-primary p-2"
+        class="lg:hidden text-primary p-2"
         id="mobile-menu-btn"
         aria-label="Menú"
       >

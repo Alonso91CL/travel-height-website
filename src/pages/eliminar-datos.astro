@@ -1,0 +1,179 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import StepCard from "../components/StepCard.astro";
+import FAQ from "../components/FAQ.astro";
+import AnswerBlock from "../components/seo/AnswerBlock.astro";
+import { siteConfig, whatsappUrl } from "../config/site";
+
+const deleteMailto = `mailto:${siteConfig.contact.email}?subject=${encodeURIComponent(
+  "Eliminar mis datos",
+)}`;
+const deleteWhatsapp = whatsappUrl(
+  "Hola, quiero solicitar la eliminación de mis datos personales.",
+);
+---
+
+<BaseLayout
+  title="Eliminar Mis Datos Personales | Travel Height SpA"
+  description="Cómo solicitar la eliminación de tus datos personales de Travel Height SpA. Derecho de supresión conforme a la Ley N° 21.719: respuesta en 5 días hábiles y eliminación en máximo 30 días."
+  currentPage="/eliminar-datos/"
+>
+  <main>
+    <section class="relative bg-navy-deep overflow-hidden hero-clip min-h-[45vh]" style="background-color: #131a33;">
+      <div class="absolute inset-0 bg-gradient-to-r from-black/60 via-black/30 to-transparent"></div>
+      <div class="relative z-10 px-margin-mobile md:px-margin-desktop pt-32 pb-16 max-w-container-max mx-auto">
+        <div class="max-w-2xl">
+          <span class="font-label-bold text-label-sm text-electric-cyan uppercase tracking-[0.2em] mb-4 block">Legal</span>
+          <h1 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg text-white mb-4">
+            Eliminación de Datos Personales
+          </h1>
+          <p class="font-body-lg text-body-lg text-gray-300">
+            Última actualización: agosto de 2026
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <AnswerBlock
+      question="¿Cómo pido eliminar mis datos?"
+      answer={`Envía tu solicitud a ${siteConfig.contact.email} con el asunto «Eliminar mis datos», o escríbenos por WhatsApp indicando tu nombre y el correo o teléfono con el que nos contactaste. Confirmamos la recepción dentro de 5 días hábiles y completamos la eliminación en un máximo de 30 días corridos.`}
+    />
+
+    <section class="px-margin-mobile md:px-margin-desktop py-section-padding bg-surface">
+      <div class="max-w-3xl mx-auto space-y-stack-lg">
+        <div class="bg-surface-container-low border-l-4 border-primary rounded-xl p-6 md:p-8">
+          <p class="text-on-surface-variant font-body-md">
+            Conforme al artículo 4° de la <strong>Ley N° 21.719</strong> sobre Protección de Datos Personales, puedes pedirnos en cualquier momento que borremos tus datos. Escríbenos con el asunto <strong>«Eliminar mis datos»</strong>: confirmamos tu solicitud dentro de <strong>5 días hábiles</strong> y completamos la eliminación en un máximo de <strong>30 días corridos</strong>.
+          </p>
+          <div class="flex flex-wrap gap-4 mt-6">
+            <a
+              href={deleteMailto}
+              class="inline-flex items-center justify-center gap-3 bg-black text-white font-label-bold text-label-bold px-8 py-4 rounded-xl hover:opacity-80 transition-all hover-lift press"
+            >
+              <span class="material-symbols-outlined">mail</span>
+              Solicitar por Correo
+            </a>
+            <a
+              href={deleteWhatsapp}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center justify-center gap-3 border-2 border-outline-variant text-primary font-label-bold text-label-bold px-8 py-4 rounded-xl hover:border-electric-cyan bg-white transition-all hover-lift press"
+            >
+              <span class="material-symbols-outlined">chat_bubble</span>
+              Solicitar por WhatsApp
+            </a>
+          </div>
+        </div>
+
+        <div>
+          <h2 class="font-headline-md text-headline-md text-primary mb-4">Quién puede solicitarla</h2>
+          <p class="text-on-surface-variant font-body-md leading-relaxed mb-3">
+            Cualquier persona que nos haya entregado sus datos puede pedir la eliminación. Los casos más comunes son:
+          </p>
+          <ul class="list-disc list-inside text-on-surface-variant font-body-md leading-relaxed space-y-2">
+            <li>Completaste un formulario de contacto o cotización en este sitio.</li>
+            <li>Nos escribiste por WhatsApp o teléfono para consultar o reportar una emergencia.</li>
+            <li>Recibiste comunicación nuestra y prefieres que dejemos de tener tus datos.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <StepCard
+      title="Cómo solicitar la eliminación"
+      description="Tres pasos simples, sin formularios ni trámites complicados."
+      steps={[
+        {
+          number: "1",
+          title: "Envía tu Solicitud",
+          description: `Escríbenos a ${siteConfig.contact.email} con el asunto «Eliminar mis datos» o usa nuestro WhatsApp oficial. Indica tu nombre y el correo o número de teléfono con el que nos contactaste.`,
+          icon: "mail",
+        },
+        {
+          number: "2",
+          title: "Verificamos tu Identidad",
+          description:
+            "Si el canal desde el que escribes no coincide con el registrado, te pediremos una verificación adicional. Es por seguridad: evitamos que un tercero solicite datos que no le pertenecen.",
+          icon: "verified_user",
+        },
+        {
+          number: "3",
+          title: "Confirmamos y Ejecutamos",
+          description:
+            "Te respondemos confirmando la solicitud dentro de 5 días hábiles. Al terminar, te avisamos por el mismo canal. El plazo máximo de eliminación es de 30 días corridos.",
+          icon: "task_alt",
+        },
+      ]}
+    />
+
+    <section class="px-margin-mobile md:px-margin-desktop py-section-padding bg-surface">
+      <div class="max-w-3xl mx-auto space-y-stack-lg">
+        <div>
+          <h2 class="font-headline-md text-headline-md text-primary mb-4">Qué datos eliminamos exactamente</h2>
+          <p class="text-on-surface-variant font-body-md leading-relaxed mb-3">
+            Al procesar tu solicitud, borramos de forma segura:
+          </p>
+          <ul class="list-disc list-inside text-on-surface-variant font-body-md leading-relaxed space-y-2">
+            <li>Tus datos de contacto entregados en formularios: nombre, correo electrónico, teléfono y empresa.</li>
+            <li>La información que incluiste en tu mensaje o requerimiento técnico.</li>
+            <li>El registro de nuestras conversaciones contigo por correo electrónico.</li>
+            <li>Las notas internas asociadas a tu solicitud de cotización o soporte.</li>
+          </ul>
+        </div>
+
+        <div>
+          <h2 class="font-headline-md text-headline-md text-primary mb-4">Qué no podemos borrar</h2>
+          <p class="text-on-surface-variant font-body-md leading-relaxed mb-3">
+            Para ser transparentes, hay excepciones definidas por la ley y la técnica:
+          </p>
+          <ul class="list-disc list-inside text-on-surface-variant font-body-md leading-relaxed space-y-2">
+            <li><strong>Documentos tributarios y contractuales:</strong> boletas, facturas y registros contables de servicios efectivamente prestados, cuya conservación exige la legislación chilena.</li>
+            <li><strong>Obligaciones vigentes:</strong> si tienes un mantenimiento contratado o una garantía activa, conservamos lo mínimo necesario para cumplirla hasta su término.</li>
+            <li><strong>Copias de respaldo:</strong> pueden mantener la información por un tiempo acotado hasta ser sobrescritas; solo se usan para restaurar el servicio ante una falla.</li>
+            <li><strong>Mensajería externa:</strong> los mensajes que ya enviaste por WhatsApp permanecen en la infraestructura de Meta y en los teléfonos de los participantes, regidos por las políticas de esa plataforma.</li>
+          </ul>
+        </div>
+
+        <div>
+          <h2 class="font-headline-md text-headline-md text-primary mb-4">Otras solicitudes sobre tus datos</h2>
+          <p class="text-on-surface-variant font-body-md leading-relaxed mb-3">
+            Además de la eliminación, puedes solicitarnos el <strong>acceso</strong>, la <strong>rectificación</strong>, la <strong>oposición</strong>, la <strong>portabilidad</strong> o el <strong>bloqueo</strong> de tus datos, escribiendo al mismo correo
+            <a class="text-primary hover:underline" href={`mailto:${siteConfig.contact.email}`}> {siteConfig.contact.email}</a>.
+          </p>
+          <p class="text-on-surface-variant font-body-md leading-relaxed">
+            Todo el detalle de qué datos recopilamos, con qué finalidad y bajo qué base legal está en nuestra
+            <a class="text-primary hover:underline" href="/privacidad/">Política de Privacidad</a>, y las condiciones del servicio en los
+            <a class="text-primary hover:underline" href="/terminos/">Términos y Condiciones</a>. Si tu solicitud no es respondida o no queda satisfecha, puedes reclamar ante la <strong>Agencia de Protección de Datos Personales</strong>.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <FAQ
+      title="Preguntas Frecuentes sobre Eliminación de Datos"
+      description="Respuestas rápidas antes de enviar tu solicitud."
+      items={[
+        {
+          question: "¿Tiene costo solicitar la eliminación de mis datos?",
+          answer:
+            "No. Según el artículo 4° de la Ley N° 21.719, ejercer tus derechos de acceso, rectificación, supresión, oposición y demás es gratuito, personal e irrenunciable.",
+        },
+        {
+          question: "¿Cuánto demora el proceso de eliminación?",
+          answer:
+            "Confirmamos la recepción de tu solicitud dentro de 5 días hábiles y ejecutamos la eliminación completa en un máximo de 30 días corridos, siempre con aviso de término por el mismo canal de contacto.",
+        },
+        {
+          question: "¿Qué pasa si contraté un servicio con Travel Height?",
+          answer:
+            "Eliminamos tus datos de contacto y prospección comercial, pero conservamos los documentos contractuales y tributarios mientras existan obligaciones legales asociadas, como garantías o registros contables.",
+        },
+        {
+          question: "¿Puedo pedir solo dejar de recibir mensajes, sin borrar todo?",
+          answer:
+            "Sí. Puedes ejercer el derecho de oposición para dejar de recibir comunicaciones manteniendo tu ficha de cliente. Indícalo expresamente en tu solicitud y lo aplicaremos.",
+        },
+      ]}
+    />
+  </main>
+</BaseLayout>
