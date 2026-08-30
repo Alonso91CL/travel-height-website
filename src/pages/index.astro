@@ -174,7 +174,7 @@ const bgImage = "/images/ascensores-travel-height.webp";
   </main>
 
   <script>
-    import { siteConfig, whatsappUrl } from "../config/site";
+    import { siteConfig } from "../config/site";
 
     const form = document.getElementById("contact-form") as HTMLFormElement;
     const status = document.getElementById("form-status") as HTMLParagraphElement;
@@ -222,20 +222,33 @@ const bgImage = "/images/ascensores-travel-height.webp";
       const mensaje = String(data.get("mensaje") ?? "").trim();
       const empresa = String(data.get("empresa") ?? "").trim();
 
-      const text = [
-        "Hola, quiero solicitar información.",
-        `Nombre: ${nombre}`,
-        empresa && `Empresa: ${empresa}`,
-        `Email: ${email}`,
-        `Servicio: ${servicio}`,
-        marca && `Marca: ${marca}`,
-        mensaje && `Mensaje: ${mensaje}`,
-      ].filter(Boolean).join("\n");
-
-      window.open(whatsappUrl(text), "_blank", "noopener");
-      setStatus(`¡Gracias ${nombre}! Tu solicitud fue preparada. Si no se abrió WhatsApp, escríbenos al ${siteConfig.contact.phone}.`, false);
-      form.reset();
-      marcaField.classList.add("hidden");
+      setStatus("Enviando...", false);
+      fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          type: "contacto",
+          nombre,
+          empresa,
+          email,
+          servicio,
+          marca,
+          mensaje,
+        }),
+      })
+        .then((resp) =>
+          resp.ok
+            ? Promise.resolve()
+            : resp.json().then((b) => Promise.reject(new Error(b.error || "Error al enviar"))),
+        )
+        .then(() => {
+          setStatus(`¡Gracias ${nombre}! Tu mensaje fue enviado. Te responderemos pronto a ${email}.`, false);
+          form.reset();
+          marcaField.classList.add("hidden");
+        })
+        .catch((err) => {
+          setStatus(`Hubo un problema al enviar: ${err.message}. Inténtalo de nuevo o escríbenos a ${siteConfig.contact.email}.`, true);
+        });
     });
   </script>
 </BaseLayout>

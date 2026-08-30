@@ -10,6 +10,7 @@ pnpm dev              # desarrollo en localhost:4321
 pnpm build            # build de producción a dist/
 pnpm check            # astro check (typecheck) — la verificación principal
 node --check server.cjs   # validar sintaxis del servidor de producción
+pnpm start                # sirve dist/ localmente (carga .env si existe)
 ```
 
 - **No hay tests.** Verificar con: `pnpm check` → `pnpm build` → grep sobre `dist/` para confirmar el cambio (o ausencia de regresiones).
@@ -34,8 +35,8 @@ node --check server.cjs   # validar sintaxis del servidor de producción
 
 Dos modos documentados en README:
 
-- **Estático (recomendado)**: subir contenido de `dist/` a `public_html` por FTP. El `.htaccess` dentro de `dist/` aporta 404 personalizada, gzip, cache y redirecciones.
-- **Node/Passenger**: app apuntando a `server.cjs` (cero dependencias: no ejecutar npm install en el servidor). Ojo: **`.htaccess` no aplica detrás de Passenger**; `server.cjs` replica las redirecciones por código.
+- **Estático (recomendado)**: subir contenido de `dist/` a `public_html` por FTP. El `.htaccess` dentro de `dist/` aporta 404 personalizada, gzip, cache y redirecciones. ⚠️ **Sin Node/Passenger los formularios no envían** (el endpoint `/api/contact` vive en `server.cjs`).
+- **Node/Passenger**: app apuntando a `server.cjs` (cero dependencias: no ejecutar npm install en el servidor). Define las variables de entorno en *Environment variables*: `RESEND_API_KEY`, `CONTACT_TO`, `CONTACT_FROM` (ver `.env.example`). Ojo: **`.htaccess` no aplica detrás de Passenger**; `server.cjs` replica las redirecciones por código.
 
 Gotchas:
 
@@ -45,7 +46,16 @@ Gotchas:
 
 ## Formularios
 
-Sin backend: los formularios de contacto/cotización abren una conversación de WhatsApp prellenada vía `wa.me` usando `whatsappUrl()` de `src/config/site.ts`. No esperar POSTs ni crear endpoints.
+Los formularios de contacto y cotización (`index.astro`, `cotizacion.astro`)
+hacen `POST` en JSON a `/api/contact`. Ese endpoint vive en **`server.cjs`**
+(no en Astro, el front es estático): valida nombre/email y reenvía el mensaje
+por email vía **Resend** con `reply_to` = correo del solicitante. Configuración
+por variables de entorno (`RESEND_API_KEY`, `CONTACT_TO`, `CONTACT_FROM`; ver
+`.env.example` — el `.env` real no se versiona). Sin `RESEND_API_KEY` la API
+responde 500. No hay base de datos: no crear otros endpoints.
+
+`whatsappUrl()` de `src/config/site.ts` queda solo para las páginas de
+emergencias y eliminación de datos (enlaces directos a `wa.me`).
 
 ## Skills de agentes instaladas
 

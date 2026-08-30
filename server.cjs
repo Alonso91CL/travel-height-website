@@ -90,6 +90,140 @@ function resolveFile(urlPath, callback) {
   });
 }
 
+// --- Endpoint de formularios (/api/contact) ---
+// Los formularios de contacto/cotizacion hacen POST en JSON; este servidor
+// reenvia el mensaje por email via Resend. Cero dependencias: solo fetch
+// nativo (Node >= 22). Configuracion via variables de entorno.
+const RESEND_API_KEY = process.env.RESEND_API_KEY || "";
+const CONTACT_TO = process.env.CONTACT_TO || "contacto@travelheight.cl";
+const CONTACT_FROM =
+  process.env.CONTACT_FROM || "Travel Height <no-reply@travelheight.cl>";
+const RESEND_API = "https://api.resend.com/emails";
+
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+function buildEmailHtml(title, lines) {
+  const rows = lines
+    .filter(([, value]) => value && String(value).trim() !== "")
+    .map(
+      ([key, value]) =>
+        `<tr><td style="padding:6px 0;font-weight:600;color:#131a33;width:150px;vertical-align:top;">${escapeHtml(key)}</td><td style="padding:6px 0;color:#333;vertical-align:top;">${escapeHtml(value)}</td></tr>`,
+    )
+    .join("");
+  return `<div style="font-family:Arial,Helvetica,sans-serif;max-width:600px;margin:auto;border:1px solid #e5e7eb;border-radius:12px;overflow:hidden;">
+  <div style="background:#0B132B;color:#fff;padding:18px 24px;font-size:18px;font-weight:700;">${escapeHtml(title)}</div>
+  <table style="width:100%;border-collapse:collapse;padding:24px;">${rows}</table>
+</div>`;
+}
+
+function sendJson(res, statusCode, obj) {
+  res.writeHead(statusCode, {
+    "Content-Type": "application/json; charset=utf-8",
+    "Cache-Control": "no-store",
+    "X-Content-Type-Options": "nosniff",
+  });
+  res.end(JSON.stringify(obj));
+}
+
+function readBody(req, callback) {
+  const chunks = [];
+  let size = 0;
+  req.on("data", (chunk) => {
+    size += chunk.length;
+    if (size > 1024 * 1024) {
+      req.destroy();
+      return;
+    }
+    chunks.push(chunk);
+  });
+  req.on("end", () => callback(Buffer.concat(chunks).toString("utf8")));
+  req.on("error", () => callback(""));
+}
+
+async function sendResendEmail({ from, to, replyTo, subject, html, text }) {
+  if (!RESEND_API_KEY) {
+    return { ok: false, error: "RESEND_API_KEY no esta configurada" };
+  }
+  const payload = { from, to, subject, html, text };
+  if (replyTo) payload.reply_to = replyTo;
+  try {
+    const resp = await fetch(RESEND_API, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${RESEND_API_KEY}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
+    const body = await resp.json().catch(() => ({}));
+    if (!resp.ok) {
+      return { ok: false, error: body.message || `Resend respondio ${resp.status}` };
+    }
+    return { ok: true, id: body.id };
+  } catch (err) {
+    return { ok: false, error: err && err.message ? err.message : String(err) };
+  }
+}
+
+function handleContact(req, res) {
+  readBody(req, async (raw) => {
+    let data;
+    try {
+      data = JSON.parse(raw || "{}");
+    } catch {
+      return sendJson(res, 400, { ok: false, error: "JSON invalido" });
+    }
+
+    const type = data.type === "cotizacion" ? "Cotización" : "Contacto";
+    const nombre = String(data.nombre || "").trim();
+    const email = String(data.email || "").trim();
+    const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+    if (!nombre) return sendJson(res, 400, { ok: false, error: "El nombre es obligatorio" });
+    if (!emailOk) return sendJson(res, 400, { ok: false, error: "Email inválido" });
+
+    const field = (k) => String(data[k] || "").trim();
+    const lines = [
+      ["Tipo", type],
+      ["Nombre", nombre],
+      ["Empresa", field("empresa")],
+      ["Email", email],
+      ["Teléfono", field("telefono")],
+      ["Edificación", field("edificacion")],
+      ["Servicio", field("servicio")],
+      ["Marca", field("marca")],
+      ["Paradas (pisos)", field("floors")],
+      ["Urgencia", field("urgency")],
+      ["Comentarios", field("comentarios")],
+      ["Mensaje", field("mensaje")],
+    ];
+
+    const subject = `Nuevo mensaje de ${type} - ${nombre}`;
+    const text = lines
+      .filter(([, v]) => v && String(v).trim() !== "")
+      .map(([k, v]) => `${k}: ${v}`)
+      .join("\n");
+    const html = buildEmailHtml(`Nuevo mensaje de ${type}`, lines);
+
+    const result = await sendResendEmail({
+      to: CONTACT_TO,
+      from: CONTACT_FROM,
+      replyTo: email,
+      subject,
+      html,
+      text,
+    });
+    if (!result.ok) return sendJson(res, 500, { ok: false, error: result.error });
+    return sendJson(res, 200, { ok: true });
+  });
+}
+
 const server = http.createServer((req, res) => {
   // Redirect canonico (solo trafico externo; el acceso local nunca redirige)
   const reqHost = String(req.headers.host || "");
@@ -105,6 +239,11 @@ const server = http.createServer((req, res) => {
       });
       return res.end();
     }
+  }
+
+  // Endpoint de formularios (POST JSON desde contacto y cotizacion)
+  if (req.method === "POST" && (req.url || "").split("?")[0] === "/api/contact") {
+    return handleContact(req, res);
   }
 
   // Solo GET/HEAD

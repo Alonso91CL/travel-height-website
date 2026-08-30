@@ -9,7 +9,7 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "start": "node server.cjs",
+    "start": "node --env-file-if-exists=.env server.cjs",
     "check": "astro check",
     "astro": "astro"
   },

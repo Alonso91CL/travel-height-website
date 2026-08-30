@@ -2,14 +2,14 @@
 
 Sitio corporativo de **Travel Height SPA**, empresa de ingeniería vertical en Chile: instalación, mantenimiento, modernización y emergencias 24/7.
 
-Construido como **sitio 100% estático** con [Astro](https://astro.build) + [Tailwind CSS 4](https://tailwindcss.com), listo para desplegarse en **cPanel**: el contenido de `dist/` se sube por FTP a `public_html` (o se sirve con el servidor propio `server.cjs`). El código fuente se versiona en Git; el build no.
+Construido como **sitio 100% estático** con [Astro](https://astro.build) + [Tailwind CSS 4](https://tailwindcss.com), listo para desplegarse en **cPanel**: el contenido de `dist/` se sube por FTP a `public_html` (o se sirve con el servidor propio `server.cjs`, que además incluye el endpoint `/api/contact` para los formularios vía email con Resend). El código fuente se versiona en Git; el build no.
 
 ## Stack
 
 - Astro 6 (SSG, salida estática en `dist/`)
 - Tailwind CSS 4 (plugin Vite) + tokens de diseño propios en `src/styles/global.css`
 - Tipografía Manrope + Material Symbols
-- Servidor de producción propio sin dependencias (`server.cjs`)
+- Servidor de producción propio sin dependencias (`server.cjs`) con endpoint `/api/contact` (email vía Resend)
 - SEO: meta tags, Open Graph, canonical, sitemap y robots.txt
 
 ## Estructura
@@ -36,7 +36,7 @@ Construido como **sitio 100% estático** con [Astro](https://astro.build) + [Tai
 | `pnpm dev`      | Servidor de desarrollo en `localhost:4321`    |
 | `pnpm build`    | Build de producción a `./dist/`               |
 | `pnpm check`    | Typecheck del proyecto (`astro check`)        |
-| `pnpm start`    | Sirve `dist/` localmente (simula producción)  |
+| `pnpm start`    | Sirve `dist/` localmente (carga `.env` si existe) |
 | `pnpm preview`  | Preview del build                             |
 
 ## Despliegue en cPanel
@@ -66,8 +66,9 @@ Para actualizar solo algunas páginas, basta subir los archivos cambiados.
 
 ### Opción B — Aplicación Node.js (Passenger)
 
-Mantiene `server.cjs` como servidor estático. Útil si el hosting bloquea
-`.htaccess` o quieres lógica de servidor propia más adelante.
+Sirve `dist/` con `server.cjs` y habilita el endpoint `/api/contact` (envío
+de formularios por email vía Resend). Útil si el hosting bloquea `.htaccess`
+o quieres lógica de servidor propia.
 
 1. **Setup Node.js App** → crear aplicación:
 
@@ -83,13 +84,15 @@ Mantiene `server.cjs` como servidor estático. Útil si el hosting bloquea
    `app.js` demo que responde "It works!" — es la causa clásica de que el
    dominio muestre la demo en vez del sitio.
 
-2. **Git Version Control** → clonar el repositorio con
+2. **Environment variables** de la app (Setup Node.js App): `RESEND_API_KEY`,
+   `CONTACT_TO`, `CONTACT_FROM` (ver `.env.example`). Sin estas variables los
+   formularios responden error (500).
+3. **Git Version Control** → clonar el repositorio con
    Clone Path = `/home/USUARIO/travelheight` (la misma raíz de aplicación).
-3. Compila localmente (`pnpm build`) y sube por FTP el contenido de
+4. Compila localmente (`pnpm build`) y sube por FTP el contenido de
    `dist/` a `~/travelheight/dist/` (server.cjs sirve esa carpeta).
-4. Botón **Restart** en la app Node (no se necesita Run NPM Install:
+5. Botón **Restart** en la app Node (no se necesita Run NPM Install:
    `server.cjs` no tiene dependencias).
-5. Opcional: añadir variable de entorno `NODE_ENV=production`.
 
 ### Flujo de trabajo
 
@@ -122,9 +125,14 @@ git remote add production ssh://USUARIO@servidor:PUERTO/home/USUARIO/travelheigh
 git push production master
 ```
 
-## Configuración de contacto
+## Configuración de contacto y formularios
 
 Los datos de contacto (teléfono, WhatsApp, email, dirección) viven en
-`src/config/site.ts`. El número de WhatsApp se usa para los envíos de los
-formularios de contacto y cotización (no hay backend; los formularios abren
-una conversación de WhatsApp prellenada).
+`src/config/site.ts`. Los formularios de contacto y cotización (`index.astro`,
+`cotizacion.astro`) hacen `POST` en JSON a `/api/contact`, endpoint manejado
+por `server.cjs`, que reenvía el mensaje por email vía **Resend** con
+`reply_to` = correo del solicitante. Configuración por variables de entorno
+(`RESEND_API_KEY`, `CONTACT_TO`, `CONTACT_FROM`; ver `.env.example` — el
+`.env` real no se versiona). Los enlaces directos de WhatsApp
+(`whatsappUrl()` en `src/config/site.ts`) se usan solo en las páginas de
+emergencias y de eliminación de datos.

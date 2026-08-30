@@ -250,7 +250,6 @@ import WebPageSchema from "../components/seo/WebPageSchema.astro";
 
   <script>
     import Swal from "sweetalert2";
-    import { whatsappUrl } from "../config/site";
 
     const byId = <T extends HTMLElement>(id: string): T | null =>
       document.getElementById(id) as T | null;
@@ -370,24 +369,39 @@ import WebPageSchema from "../components/seo/WebPageSchema.astro";
       }
 
       const field = (name: string) => String(data.get(name) || "").trim();
-      const marca = field("marca");
-      const lines = [
-        "Hola, quiero solicitar una cotización.",
-        `Nombre: ${nombre}`,
-        field("empresa") && `Empresa: ${field("empresa")}`,
-        `Email: ${email}`,
-        field("telefono") && `Teléfono: ${field("telefono")}`,
-        `Edificación: ${field("edificacion")}`,
-        `Servicio: ${servicio}`,
-        marca && `Marca: ${marca}`,
-        `Paradas (pisos): ${getRadioValue(form, "floors") || "Sin especificar"}`,
-        `Urgencia: ${getRadioValue(form, "urgency") || "Sin especificar"}`,
-      ];
-      const comentarios = field("comentarios");
-      if (comentarios) lines.push(`Comentarios: ${comentarios}`);
+      const floors = getRadioValue(form, "floors") || "Sin especificar";
+      const urgency = getRadioValue(form, "urgency") || "Sin especificar";
 
-      window.open(whatsappUrl(lines.filter(Boolean).join("\n")), "_blank", "noopener");
-      showSuccess();
+      showToast("Enviando solicitud...", "success");
+      fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          type: "cotizacion",
+          nombre,
+          empresa: field("empresa"),
+          email,
+          telefono: field("telefono"),
+          edificacion: field("edificacion"),
+          servicio,
+          marca: field("marca"),
+          floors,
+          urgency,
+          comentarios: field("comentarios"),
+        }),
+      })
+        .then((resp) =>
+          resp.ok
+            ? Promise.resolve()
+            : resp.json().then((b) => Promise.reject(new Error(b.error || "Error al enviar"))),
+        )
+        .then(() => {
+          showToast("¡Solicitud enviada con éxito!", "success");
+          showSuccess();
+        })
+        .catch((err) => {
+          showToast(`Hubo un problema al enviar: ${err.message}. Inténtalo de nuevo.`);
+        });
     }
 
     document.addEventListener("click", (event) => {
