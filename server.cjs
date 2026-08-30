@@ -125,6 +125,25 @@ const server = http.createServer((req, res) => {
         "X-Content-Type-Options": "nosniff",
         "X-Frame-Options": "SAMEORIGIN",
         "Referrer-Policy": "strict-origin-when-cross-origin",
+        // HSTS: fuerza HTTPS a nivel de navegador (solo los primeros 10 días en
+        // modo "preload-no"; el canónico ya es https://www, así que es seguro).
+        "Strict-Transport-Security":
+          "max-age=31536000; includeSubDomains",
+        // Permissions-Policy: desactiva APIs del navegador que el sitio no usa.
+        "Permissions-Policy":
+          "camera=(), microphone=(), geolocation=(), payment=(), usb=()",
+        // CSP conservador: permite scripts/estilos inline para no romper nada
+        // con Astro (unsafe-inline). Fonts externos de Google, resto self.
+        "Content-Security-Policy":
+          "default-src 'self'; " +
+          "script-src 'self' 'unsafe-inline'; " +
+          "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +
+          "font-src 'self' https://fonts.gstatic.com; " +
+          "img-src 'self' data: https:; " +
+          "connect-src 'self'; " +
+          "frame-ancestors 'none'; " +
+          "base-uri 'self'; " +
+          "form-action 'self'",
       };
 
       // Assets con hash en /_astro/: cache inmutable. HTML: siempre revalidar.

@@ -74,16 +74,16 @@ import WebPageSchema from "../components/seo/WebPageSchema.astro";
               </div>
               <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div class="space-y-2">
-                  <label class="font-label-bold text-label-bold text-on-surface">Nombre Completo</label>
-                  <input class="w-full px-4 py-3 bg-surface-container-low border-none rounded-lg focus:ring-2 focus:ring-electric-cyan focus:bg-white transition-all outline-none" placeholder="Ej. Carlos Mendoza" type="text" name="nombre" />
+                  <label class="font-label-bold text-label-bold text-on-surface">Nombre Completo *</label>
+                  <input class="w-full px-4 py-3 bg-surface-container-low border-none rounded-lg focus:ring-2 focus:ring-electric-cyan focus:bg-white transition-all outline-none" placeholder="Ej. Carlos Mendoza" type="text" name="nombre" required />
                 </div>
                 <div class="space-y-2">
                   <label class="font-label-bold text-label-bold text-on-surface">Empresa / Copropiedad</label>
                   <input class="w-full px-4 py-3 bg-surface-container-low border-none rounded-lg focus:ring-2 focus:ring-electric-cyan focus:bg-white transition-all outline-none" placeholder="Nombre de la entidad" type="text" name="empresa" />
                 </div>
                 <div class="space-y-2">
-                  <label class="font-label-bold text-label-bold text-on-surface">Correo Electrónico</label>
-                  <input class="w-full px-4 py-3 bg-surface-container-low border-none rounded-lg focus:ring-2 focus:ring-electric-cyan focus:bg-white transition-all outline-none" placeholder="carlos@empresa.com" type="email" name="email" />
+                  <label class="font-label-bold text-label-bold text-on-surface">Correo Electrónico *</label>
+                  <input class="w-full px-4 py-3 bg-surface-container-low border-none rounded-lg focus:ring-2 focus:ring-electric-cyan focus:bg-white transition-all outline-none" placeholder="carlos@empresa.com" type="email" name="email" required />
                 </div>
                 <div class="space-y-2">
                   <label class="font-label-bold text-label-bold text-on-surface">Teléfono</label>
@@ -116,12 +116,29 @@ import WebPageSchema from "../components/seo/WebPageSchema.astro";
                   </select>
                 </div>
                 <div class="space-y-2">
-                  <label class="font-label-bold text-label-bold text-on-surface">Servicio Requerido</label>
-                  <select class="w-full px-4 py-3 bg-surface-container-low border-none rounded-lg focus:ring-2 focus:ring-electric-cyan focus:bg-white transition-all outline-none appearance-none" name="servicio">
+                  <label class="font-label-bold text-label-bold text-on-surface">Servicio Requerido *</label>
+                  <select class="w-full px-4 py-3 bg-surface-container-low border-none rounded-lg focus:ring-2 focus:ring-electric-cyan focus:bg-white transition-all outline-none appearance-none" name="servicio" required>
+                    <option value="">Seleccionar servicio</option>
                     <option>Instalación Equipo Nuevo</option>
                     <option>Mantenimiento Mensual</option>
                     <option>Modernización Tecnológica</option>
                     <option>Reparación Mayor</option>
+                  </select>
+                </div>
+                <div class="space-y-2 md:col-span-2 hidden" id="marca-cotizacion-field">
+                  <label class="font-label-bold text-label-bold text-on-surface">Marca del Equipo</label>
+                  <select class="w-full px-4 py-3 bg-surface-container-low border-none rounded-lg focus:ring-2 focus:ring-electric-cyan focus:bg-white transition-all outline-none appearance-none" name="marca">
+                    <option value="">Seleccionar marca</option>
+                    <option>Otis</option>
+                    <option>Schindler</option>
+                    <option>KONE</option>
+                    <option>ThyssenKrupp</option>
+                    <option>Mitsubishi</option>
+                    <option>Hyundai</option>
+                    <option>Fujitec</option>
+                    <option>Sigma</option>
+                    <option>Electra</option>
+                    <option>Otros</option>
                   </select>
                 </div>
                 <div class="space-y-2 md:col-span-2">
@@ -232,10 +249,30 @@ import WebPageSchema from "../components/seo/WebPageSchema.astro";
   </style>
 
   <script>
+    import Swal from "sweetalert2";
     import { whatsappUrl } from "../config/site";
 
     const byId = <T extends HTMLElement>(id: string): T | null =>
       document.getElementById(id) as T | null;
+
+    const toast = Swal.mixin({
+      toast: true,
+      position: "top-end",
+      showConfirmButton: false,
+      timer: 4000,
+      timerProgressBar: true,
+      didOpen: (el) => {
+        el.addEventListener("mouseenter", () => Swal.stopTimer());
+        el.addEventListener("mouseleave", () => Swal.resumeTimer());
+      },
+    });
+
+    function showToast(message: string, type: "error" | "success" = "error") {
+      toast.fire({
+        icon: type,
+        title: message,
+      });
+    }
 
     function goToStep(step: number) {
       document.querySelectorAll(".step-transition").forEach((el) => {
@@ -273,6 +310,45 @@ import WebPageSchema from "../components/seo/WebPageSchema.astro";
       return checked ? checked.value : "";
     }
 
+    function toggleMarcaField() {
+      const form = byId<HTMLFormElement>("quote-form");
+      if (!form) return;
+      const servicio = String(new FormData(form).get("servicio") || "");
+      const marcaField = byId("marca-cotizacion-field");
+      if (!marcaField) return;
+      const showMarca = ["Mantenimiento Mensual", "Modernización Tecnológica", "Reparación Mayor"].includes(servicio);
+      marcaField.classList.toggle("hidden", !showMarca);
+    }
+
+    function validateStep(step: number): boolean {
+      const form = byId<HTMLFormElement>("quote-form");
+      if (!form) return false;
+      const data = new FormData(form);
+
+      if (step === 1) {
+        const nombre = String(data.get("nombre") || "").trim();
+        const email = String(data.get("email") || "").trim();
+        if (!nombre) {
+          showToast("El nombre es obligatorio.");
+          return false;
+        }
+        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+          showToast("Ingresa un correo electrónico válido.");
+          return false;
+        }
+      }
+
+      if (step === 2) {
+        const servicio = String(data.get("servicio") || "");
+        if (!servicio) {
+          showToast("Selecciona un tipo de servicio.");
+          return false;
+        }
+      }
+
+      return true;
+    }
+
     function submitQuote() {
       const form = byId<HTMLFormElement>("quote-form");
       if (!form) return;
@@ -281,12 +357,20 @@ import WebPageSchema from "../components/seo/WebPageSchema.astro";
       const email = String(data.get("email") || "").trim();
 
       if (!nombre || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        alert("Completa tu nombre y un correo electrónico válido en el primer paso.");
+        showToast("Completa tu nombre y un correo electrónico válido en el primer paso.");
         goToStep(1);
         return;
       }
 
+      const servicio = String(data.get("servicio") || "");
+      if (!servicio) {
+        showToast("Selecciona un tipo de servicio en el segundo paso.");
+        goToStep(2);
+        return;
+      }
+
       const field = (name: string) => String(data.get(name) || "").trim();
+      const marca = field("marca");
       const lines = [
         "Hola, quiero solicitar una cotización.",
         `Nombre: ${nombre}`,
@@ -294,7 +378,8 @@ import WebPageSchema from "../components/seo/WebPageSchema.astro";
         `Email: ${email}`,
         field("telefono") && `Teléfono: ${field("telefono")}`,
         `Edificación: ${field("edificacion")}`,
-        `Servicio: ${field("servicio")}`,
+        `Servicio: ${servicio}`,
+        marca && `Marca: ${marca}`,
         `Paradas (pisos): ${getRadioValue(form, "floors") || "Sin especificar"}`,
         `Urgencia: ${getRadioValue(form, "urgency") || "Sin especificar"}`,
       ];
@@ -308,11 +393,28 @@ import WebPageSchema from "../components/seo/WebPageSchema.astro";
     document.addEventListener("click", (event) => {
       const target = event.target as HTMLElement | null;
       if (!target) return;
-      if (target.closest("#step1-next")) goToStep(2);
-      else if (target.closest("#step2-next")) goToStep(3);
-      else if (target.closest("#step2-back")) goToStep(1);
+      if (target.closest("#step1-next")) {
+        if (validateStep(1)) goToStep(2);
+      } else if (target.closest("#step2-next")) {
+        if (validateStep(2)) goToStep(3);
+      } else if (target.closest("#step2-back")) goToStep(1);
       else if (target.closest("#step3-back")) goToStep(2);
       else if (target.closest("#step3-submit")) submitQuote();
     });
+
+    document.addEventListener("change", (event) => {
+      const target = event.target as HTMLSelectElement | null;
+      if (target && target.name === "servicio") {
+        toggleMarcaField();
+      }
+    });
   </script>
+
+  <style is:global>
+    .swal2-toast .swal2-title {
+      font-family: "Manrope", "Segoe UI", sans-serif;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+  </style>
 </BaseLayout>
