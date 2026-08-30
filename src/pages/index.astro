@@ -136,17 +136,32 @@ const bgImage = "/images/ascensores-travel-height.webp";
         <div class="bg-white rounded-2xl ambient-shadow p-8">
           <form id="contact-form" novalidate class="space-y-4">
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <input type="text" name="nombre" placeholder="Nombre" required class="w-full p-4 bg-surface-container-low rounded-xl font-body-md outline-none focus:bg-white focus:ring-2 focus:ring-electric-cyan transition-all" />
+              <input type="text" name="nombre" placeholder="Nombre *" required class="w-full p-4 bg-surface-container-low rounded-xl font-body-md outline-none focus:bg-white focus:ring-2 focus:ring-electric-cyan transition-all" />
               <input type="text" name="empresa" placeholder="Empresa" class="w-full p-4 bg-surface-container-low rounded-xl font-body-md outline-none focus:bg-white focus:ring-2 focus:ring-electric-cyan transition-all" />
             </div>
-            <input type="email" name="email" placeholder="Email" required class="w-full p-4 bg-surface-container-low rounded-xl font-body-md outline-none focus:bg-white focus:ring-2 focus:ring-electric-cyan transition-all" />
-            <select name="servicio" class="w-full p-4 bg-surface-container-low rounded-xl font-body-md outline-none focus:bg-white focus:ring-2 focus:ring-electric-cyan transition-all">
-              <option>Tipo de Servicio</option>
+            <input type="email" name="email" placeholder="Email *" required class="w-full p-4 bg-surface-container-low rounded-xl font-body-md outline-none focus:bg-white focus:ring-2 focus:ring-electric-cyan transition-all" />
+            <select name="servicio" required class="w-full p-4 bg-surface-container-low rounded-xl font-body-md outline-none focus:bg-white focus:ring-2 focus:ring-electric-cyan transition-all">
+              <option value="">Tipo de Servicio *</option>
               <option>Instalación</option>
               <option>Mantenimiento</option>
               <option>Modernización</option>
               <option>Emergencia</option>
             </select>
+            <div id="marca-field" class="hidden">
+              <select name="marca" class="w-full p-4 bg-surface-container-low rounded-xl font-body-md outline-none focus:bg-white focus:ring-2 focus:ring-electric-cyan transition-all">
+                <option value="">Marca del Equipo</option>
+                <option>Otis</option>
+                <option>Schindler</option>
+                <option>KONE</option>
+                <option>ThyssenKrupp</option>
+                <option>Mitsubishi</option>
+                <option>Hyundai</option>
+                <option>Fujitec</option>
+                <option>Sigma</option>
+                <option>Electra</option>
+                <option>Otros</option>
+              </select>
+            </div>
             <textarea name="mensaje" placeholder="Mensaje" rows="4" class="w-full p-4 bg-surface-container-low rounded-xl font-body-md outline-none focus:bg-white focus:ring-2 focus:ring-electric-cyan transition-all"></textarea>
             <button type="submit" class="w-full bg-black text-white font-label-bold text-label-bold py-4 rounded-xl hover:opacity-80 transition-all active:scale-95 press">
               Enviar Mensaje
@@ -163,6 +178,8 @@ const bgImage = "/images/ascensores-travel-height.webp";
 
     const form = document.getElementById("contact-form") as HTMLFormElement;
     const status = document.getElementById("form-status") as HTMLParagraphElement;
+    const servicioSelect = form.querySelector('select[name="servicio"]') as HTMLSelectElement;
+    const marcaField = document.getElementById("marca-field") as HTMLDivElement;
 
     function setStatus(message: string, isError = false) {
       status.textContent = message;
@@ -171,18 +188,37 @@ const bgImage = "/images/ascensores-travel-height.webp";
       status.classList.toggle("text-green-700", !isError);
     }
 
+    function toggleMarcaField() {
+      const servicio = servicioSelect.value;
+      const showMarca = ["Mantenimiento", "Modernización", "Emergencia"].includes(servicio);
+      marcaField.classList.toggle("hidden", !showMarca);
+    }
+
+    servicioSelect.addEventListener("change", toggleMarcaField);
+
     form.addEventListener("submit", (event) => {
       event.preventDefault();
       const data = new FormData(form);
       const nombre = String(data.get("nombre") ?? "").trim();
       const email = String(data.get("email") ?? "").trim();
+      const servicio = String(data.get("servicio") ?? "");
 
-      if (!nombre || !email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        setStatus("Completa tu nombre y un email válido.", true);
+      if (!nombre) {
+        setStatus("El nombre es obligatorio.", true);
         return;
       }
 
-      const servicio = String(data.get("servicio") ?? "").replace("Tipo de Servicio", "Sin especificar");
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        setStatus("Ingresa un email válido.", true);
+        return;
+      }
+
+      if (!servicio) {
+        setStatus("Selecciona un tipo de servicio.", true);
+        return;
+      }
+
+      const marca = String(data.get("marca") ?? "").trim();
       const mensaje = String(data.get("mensaje") ?? "").trim();
       const empresa = String(data.get("empresa") ?? "").trim();
 
@@ -192,12 +228,14 @@ const bgImage = "/images/ascensores-travel-height.webp";
         empresa && `Empresa: ${empresa}`,
         `Email: ${email}`,
         `Servicio: ${servicio}`,
+        marca && `Marca: ${marca}`,
         mensaje && `Mensaje: ${mensaje}`,
       ].filter(Boolean).join("\n");
 
       window.open(whatsappUrl(text), "_blank", "noopener");
       setStatus(`¡Gracias ${nombre}! Tu solicitud fue preparada. Si no se abrió WhatsApp, escríbenos al ${siteConfig.contact.phone}.`, false);
       form.reset();
+      marcaField.classList.add("hidden");
     });
   </script>
 </BaseLayout>
