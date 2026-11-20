@@ -1,46 +1,53 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { projects } from "../data/projects";
+import { Image } from "astro:assets";
 
-const projects = [
-  {
-    title: "Torre Vitacura Premium",
-    category: "Residencial",
-    location: "Santiago",
-    description: "Instalación de 6 ascensores inteligentes de alta velocidad con sistema de pre-asignación de llamadas y acabados personalizados en mármol y acero inoxidable.",
-    image: "/images/proyecto-torre-vitacura.jpg",
-    span: "md:col-span-8",
-  },
-  {
-    title: "Clínica del Mar",
-    category: "Hospitalario",
-    location: "Viña del Mar",
-    description: "Modernización completa de ascensores de carga y pasajeros con protocolos de sanitización automática UV para entornos hospitalarios críticos.",
-    image: "/images/proyecto-clinica-mar.jpg",
-    span: "md:col-span-4",
-  },
-  {
-    title: "Centro Logístico Pudahuel",
-    category: "Industrial",
-    location: "Santiago",
-    description: "Ascensores de carga pesada con montacargas de alta capacidad (5000kg) para centro de distribución logística.",
-    image: "/images/proyecto-logistica-pudahuel.jpg",
-    span: "md:col-span-4",
-  },
-  {
-    title: "Mall Plaza Trébol",
-    category: "Comercial",
-    location: "Concepción",
-    description: "Instalación de ascensores panorámicos de cristal templado, integrando movilidad fluida con la estética visual del centro comercial.",
-    image: "/images/proyecto-mall-trebol.jpg",
-    span: "md:col-span-8",
-  },
+// Datos para el lightbox: solo lo necesario en el cliente (nombre + URLs).
+const galleryData = projects.map((p) => ({
+  name: p.name,
+  images: p.images.map((img) => img.src),
+}));
+
+const spans = [
+  "md:col-span-7",
+  "md:col-span-5",
+  "md:col-span-5",
+  "md:col-span-4",
+  "md:col-span-3",
+  "md:col-span-3",
+  "md:col-span-3",
+  "md:col-span-3",
+  "md:col-span-3",
 ];
+
+const heights = [
+  "h-[300px] md:h-[500px]",
+  "h-[300px] md:h-[500px]",
+  "h-[300px] md:h-[420px]",
+  "h-[300px] md:h-[420px]",
+  "h-[300px] md:h-[420px]",
+  "h-[300px] md:h-[340px]",
+  "h-[300px] md:h-[340px]",
+  "h-[300px] md:h-[340px]",
+  "h-[300px] md:h-[340px]",
+];
+
+const ldJson = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: "Proyectos de Travel Height SpA",
+  itemListElement: projects.map((p, i) => ({
+    "@type": "ListItem",
+    position: i + 1,
+    name: p.name,
+  })),
+});
 ---
 
 <BaseLayout
-  title="Proyectos y Casos de Éxito | Travel Height"
-  description="Proyectos realizados: Torre Vitacura Premium, Clínica del Mar, Centro Logístico Pudahuel y Mall Plaza Trébol. Instalaciones y modernizaciones certificadas."
-  image="/images/proyecto-torre-vitacura.jpg"
+  title="Proyectos | Travel Height"
+  description={`Trabajos reales de instalación y mantención de ascensores en ${projects.length} edificios y condominios de Chile: ${projects.map((p) => p.name).join(", ")}.`}
   currentPage="/proyectos/"
 >
   <main>
@@ -51,52 +58,74 @@ const projects = [
           <div class="hero-content">
             <span class="font-label-bold text-label-sm text-secondary uppercase tracking-[0.2em] mb-4 block">Portafolio</span>
             <h1 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg text-primary">
-              Elevando los estándares de la arquitectura moderna.
+              Trabajo real, en terreno, en cada edificio.
             </h1>
           </div>
           <p class="font-body-lg text-body-lg text-on-surface-variant">
-            Descubra nuestras soluciones de transporte vertical en proyectos icónicos, desde complejos residenciales hasta infraestructuras hospitalarias de alta tecnología.
+            Estos son proyectos reales de instalación y mantención de elevadores y escaleras mecánicas: fotos directas de nuestras salas de máquinas, cuadros de control, pozos y equipos en operación.
           </p>
         </div>
       </div>
     </section>
 
-    <!-- Filters -->
-    <section class="px-margin-mobile md:px-margin-desktop pb-8">
-      <div class="max-w-container-max mx-auto flex flex-wrap gap-3">
-        {["Todos", "Residencial", "Comercial", "Industrial", "Hospitalario"].map((tag) => (
-          <button class:list={[
-            "px-5 py-2 rounded-full font-label-bold text-label-sm transition-all",
-            tag === "Todos"
-              ? "bg-primary text-white"
-              : "bg-surface-container-high text-on-surface-variant hover:bg-primary hover:text-white",
-          ]}>
-            {tag}
-          </button>
-        ))}
-      </div>
-    </section>
-
-    <!-- Project Gallery -->
-    <section class="px-margin-mobile md:px-margin-desktop py-section-padding reveal">
+    <!-- Project Gallery (bento) -->
+    <section class="px-margin-mobile md:px-margin-desktop pb-section-padding">
       <div class="max-w-container-max mx-auto">
         <div class="grid grid-cols-1 md:grid-cols-12 gap-gutter stagger">
           {projects.map((p, i) => (
-            <div class:list={[p.span, "group relative rounded-xl overflow-hidden ambient-shadow project-card cursor-pointer", i === 0 || i === 1 ? "h-[500px]" : "h-[400px]"]}>
-              <div class="absolute inset-0 bg-cover bg-center project-image transition-transform duration-700 ease-out" style={`background-image: url('${p.image}')`}></div>
-              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent opacity-60 group-hover:opacity-80 transition-opacity"></div>
-              <div class="absolute bottom-0 left-0 p-8 w-full">
-                <div class="flex items-center gap-2 mb-3">
-                  <span class="bg-white/20 backdrop-blur-md text-white text-[10px] font-label-bold px-3 py-1 rounded-full uppercase tracking-tighter">{p.category}</span>
-                  {p.location && <span class="text-white/70 text-[12px] font-label-bold">{p.location}</span>}
+            <figure
+              class:list={[
+                "project-card group relative rounded-xl overflow-hidden ambient-shadow",
+                spans[i],
+                heights[i],
+              ]}
+            >
+              <Image
+                src={p.images[0]}
+                alt={`${p.name} — registro fotográfico de trabajo en terreno`}
+                widths={[400, 800, 1200]}
+                sizes="(min-width: 768px) 50vw, 100vw"
+                format="webp"
+                quality={80}
+                loading={i < 2 ? "eager" : "lazy"}
+                class="absolute inset-0 h-full w-full object-cover project-image transition-transform duration-700 ease-out"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent opacity-70 group-hover:opacity-90 transition-opacity pointer-events-none"></div>
+              <figcaption class="absolute bottom-0 left-0 p-6 w-full pointer-events-none">
+                <div class="flex items-center gap-2 mb-2 flex-wrap">
+                  <span class="bg-white/20 backdrop-blur-md text-white text-[10px] font-label-bold px-3 py-1 rounded-full uppercase tracking-tighter">
+                    {p.comuna ?? "Chile"}
+                  </span>
+                  <span class="bg-white/20 backdrop-blur-md text-white text-[10px] font-label-bold px-3 py-1 rounded-full uppercase tracking-tighter">
+                    {p.images.length} fotos
+                  </span>
                 </div>
-                <h3 class:list={["text-white", i === 0 || i === 3 ? "font-headline-md text-headline-md" : "font-headline-sm text-headline-sm", "mb-2"]}>{p.title}</h3>
-                <p class="text-white/80 font-body-md text-body-md max-w-lg opacity-0 group-hover:opacity-100 transition-opacity delay-100">
-                  {p.description}
-                </p>
-              </div>
-            </div>
+                <h2 class="text-white font-headline-sm text-headline-sm mb-3">{p.name}</h2>
+                <span class="inline-flex items-center gap-2 text-white/90 text-label-sm font-label-bold opacity-0 group-hover:opacity-100 transition-opacity">
+                  <span class="material-symbols-outlined text-[18px]" aria-hidden="true">photo_library</span>
+                  Ver galería
+                </span>
+              </figcaption>
+              <button
+                type="button"
+                class="absolute inset-0 z-10 cursor-pointer focus-visible:outline-2 focus-visible:outline-electric-cyan"
+                data-gallery-index={i}
+                aria-label={`Ver galería de fotos del proyecto ${p.name}`}
+              ></button>
+            </figure>
           ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Nota sobre calidad de fotos -->
+    <section class="px-margin-mobile md:px-margin-desktop pb-section-padding reveal">
+      <div class="max-w-container-max mx-auto">
+        <div class="bg-surface-container-low rounded-xl p-8 md:p-10 technical-grid">
+          <h2 class="font-headline-sm text-headline-sm text-primary mb-3">Fotos tomadas por nuestro equipo</h2>
+          <p class="text-on-surface-variant font-body-md max-w-3xl">
+            Todas las imágenes corresponden a registros de trabajo en terreno de Travel Height SpA, empresa inscrita en el Registro MINVU N° 387. Publicamos lo que vemos en cada visita: equipos, medidas, certificaciones y mantenimientos ejecutados.
+          </p>
         </div>
       </div>
     </section>
@@ -104,9 +133,9 @@ const projects = [
     <!-- CTA -->
     <section class="bg-surface-container-low px-margin-mobile md:px-margin-desktop py-section-padding reveal">
       <div class="max-w-container-max mx-auto text-center">
-        <h2 class="font-headline-md text-headline-md text-primary mb-4">¿Tiene un proyecto en mente?</h2>
+        <h2 class="font-headline-md text-headline-md text-primary mb-4">¿Su edificio necesita un proyecto así?</h2>
         <p class="text-on-surface-variant font-body-md max-w-2xl mx-auto mb-8">
-          Contáctenos para discutir cómo podemos hacer realidad su próximo proyecto de elevación vertical.
+          Contáctenos para evaluar la instalación o mantención de elevadores en su edificio o condominio.
         </p>
         <div class="flex flex-wrap justify-center gap-4">
           <a href="/cotizacion/" class="bg-black text-white font-label-bold px-8 py-4 rounded-xl hover:opacity-80 transition-all hover-lift press">
@@ -119,4 +148,132 @@ const projects = [
       </div>
     </section>
   </main>
+
+  <!-- Lightbox -->
+  <div
+    id="gallery-lightbox"
+    class="fixed inset-0 z-[60] hidden items-center justify-center bg-navy-deep/95 backdrop-blur-sm"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Galería de fotos del proyecto"
+  >
+    <button type="button" id="gallery-close" class="absolute top-4 right-4 z-10 bg-white/10 hover:bg-white/25 text-white rounded-full p-3 transition-colors" aria-label="Cerrar galería">
+      <span class="material-symbols-outlined text-[24px]" aria-hidden="true">close</span>
+    </button>
+
+    <button type="button" id="gallery-prev" class="absolute left-2 md:left-6 z-10 bg-white/10 hover:bg-white/25 text-white rounded-full p-3 transition-colors" aria-label="Foto anterior">
+      <span class="material-symbols-outlined text-[28px]" aria-hidden="true">chevron_left</span>
+    </button>
+    <button type="button" id="gallery-next" class="absolute right-2 md:right-6 z-10 bg-white/10 hover:bg-white/25 text-white rounded-full p-3 transition-colors" aria-label="Foto siguiente">
+      <span class="material-symbols-outlined text-[28px]" aria-hidden="true">chevron_right</span>
+    </button>
+
+    <div class="flex flex-col items-center justify-center w-full h-full px-14 md:px-24 pt-20 pb-4 gap-4">
+      <div class="flex-1 min-h-0 w-full flex items-center justify-center">
+        <img id="gallery-image" class="max-h-full max-w-full rounded-lg object-contain" src="" alt="" />
+      </div>
+      <p id="gallery-caption" class="text-white/80 font-label-bold text-label-bold text-center shrink-0"></p>
+      <div id="gallery-thumbs" class="shrink-0 flex gap-2 overflow-x-auto max-w-full pb-1"></div>
+    </div>
+  </div>
+
+  <script is:inline type="application/json" id="gallery-data" set:html={JSON.stringify(galleryData)} />
+  <script is:inline type="application/ld+json" set:html={ldJson} />
+
+  <script>
+    (function () {
+      const lightbox = document.getElementById("gallery-lightbox")!;
+      const imageEl = document.getElementById("gallery-image") as HTMLImageElement;
+      const captionEl = document.getElementById("gallery-caption")!;
+      const thumbsEl = document.getElementById("gallery-thumbs")!;
+      const closeBtn = document.getElementById("gallery-close")!;
+      const prevBtn = document.getElementById("gallery-prev")!;
+      const nextBtn = document.getElementById("gallery-next")!;
+      const dataEl = document.getElementById("gallery-data");
+      if (!dataEl) return;
+
+      const projectsData: Array<{ name: string; images: string[] }> = JSON.parse(dataEl.textContent || "[]");
+      let projectIndex = 0;
+      let photoIndex = 0;
+      let lastFocused: HTMLElement | null = null;
+
+      function render() {
+        const project = projectsData[projectIndex];
+        const src = project.images[photoIndex];
+        imageEl.src = src;
+        imageEl.alt = `${project.name} — foto ${photoIndex + 1} de ${project.images.length}`;
+        captionEl.textContent = `${project.name} · ${photoIndex + 1} / ${project.images.length}`;
+        thumbsEl.querySelectorAll("button").forEach((b, i) => {
+          b.classList.toggle("opacity-50", i !== photoIndex);
+          b.classList.toggle("ring-2", i === photoIndex);
+          b.classList.toggle("ring-electric-cyan", i === photoIndex);
+        });
+      }
+
+      function buildThumbs() {
+        const project = projectsData[projectIndex];
+        thumbsEl.innerHTML = "";
+        project.images.forEach((src, i) => {
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "shrink-0 rounded-md overflow-hidden h-14 w-20 bg-black/30";
+          btn.setAttribute("aria-label", `Ver foto ${i + 1} de ${project.name}`);
+          const thumb = document.createElement("img");
+          thumb.src = src;
+          thumb.alt = "";
+          thumb.className = "h-full w-full object-cover";
+          btn.appendChild(thumb);
+          btn.addEventListener("click", () => {
+            photoIndex = i;
+            render();
+          });
+          thumbsEl.appendChild(btn);
+        });
+      }
+
+      function open(index: number) {
+        projectIndex = index;
+        photoIndex = 0;
+        lastFocused = document.activeElement as HTMLElement;
+        buildThumbs();
+        render();
+        lightbox.classList.remove("hidden");
+        lightbox.classList.add("flex");
+        document.body.classList.add("menu-open");
+        closeBtn.focus();
+      }
+
+      function close() {
+        lightbox.classList.add("hidden");
+        lightbox.classList.remove("flex");
+        document.body.classList.remove("menu-open");
+        if (lastFocused) lastFocused.focus();
+      }
+
+      function step(delta: number) {
+        const total = projectsData[projectIndex].images.length;
+        photoIndex = (photoIndex + delta + total) % total;
+        render();
+      }
+
+      document.querySelectorAll("[data-gallery-index]").forEach((card) => {
+        card.addEventListener("click", () => open(Number(card.getAttribute("data-gallery-index"))));
+      });
+
+      closeBtn.addEventListener("click", close);
+      prevBtn.addEventListener("click", () => step(-1));
+      nextBtn.addEventListener("click", () => step(1));
+
+      lightbox.addEventListener("click", (e) => {
+        if (e.target === lightbox) close();
+      });
+
+      document.addEventListener("keydown", (e) => {
+        if (lightbox.classList.contains("hidden")) return;
+        if (e.key === "Escape") close();
+        if (e.key === "ArrowLeft") step(-1);
+        if (e.key === "ArrowRight") step(1);
+      });
+    })();
+  </script>
 </BaseLayout>
