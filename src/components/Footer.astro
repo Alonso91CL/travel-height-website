@@ -1,5 +1,5 @@
 ---
-import { siteConfig } from "../config/site";
+import { siteConfig, whatsappUrl } from "../config/site";
 ---
 
 <footer
@@ -117,15 +117,19 @@ import { siteConfig } from "../config/site";
     <div class="flex gap-4">
       <a
         class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:bg-white hover:text-navy-deep transition-all"
-        href="#"
+        href={`mailto:${siteConfig.contact.email}`}
+        aria-label="Enviar correo electrónico"
       >
         <span class="material-symbols-outlined text-sm">alternate_email</span>
       </a>
       <a
         class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:bg-white hover:text-navy-deep transition-all"
-        href="#"
+        href={whatsappUrl("Hola, quiero consultar por sus servicios.")}
+        target="_blank"
+        rel="noopener"
+        aria-label="Contactar por WhatsApp"
       >
-        <span class="material-symbols-outlined text-sm">share</span>
+        <span class="material-symbols-outlined text-sm">chat</span>
       </a>
     </div>
   </div>
