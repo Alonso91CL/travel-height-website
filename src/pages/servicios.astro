@@ -2,6 +2,9 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Hero from "../components/Hero.astro";
 import ServiceSchema from "../components/seo/ServiceSchema.astro";
+import { siteConfig } from "../config/site";
+
+const phoneHref = `tel:${siteConfig.contact.phone.replace(/\s/g, "")}`;
 
 const bgImage = "/images/ascensores-tecnicos.webp";
 const serviceImg = "/images/servicios-instalacion.webp";
@@ -77,7 +80,7 @@ const processImg = "/images/servicios-proceso.webp";
                   <li class="flex items-center gap-2 font-label-bold"><span class="material-symbols-outlined text-electric-cyan text-sm">check_circle</span> Eficiencia Energética A+</li>
                   <li class="flex items-center gap-2 font-label-bold"><span class="material-symbols-outlined text-electric-cyan text-sm">check_circle</span> Integración IoT</li>
                 </ul>
-                <a class="inline-flex items-center gap-2 font-label-bold text-label-bold text-navy-deep hover:translate-x-1 transition-transform" href="#instalacion">Explorar Proceso <span class="material-symbols-outlined text-sm">arrow_forward</span></a>
+              <a class="inline-flex items-center gap-2 font-label-bold text-label-bold text-navy-deep hover:translate-x-1 transition-transform" href="#proceso">Explorar Proceso <span class="material-symbols-outlined text-sm">arrow_forward</span></a>
               </div>
               <div class="relative h-64 md:h-full overflow-hidden">
                 <img src={serviceImg} alt="Instalación" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
@@ -98,14 +101,14 @@ const processImg = "/images/servicios-proceso.webp";
                 <span class="block text-xs uppercase tracking-widest text-white/50 mb-1">Tiempo Promedio</span>
                 <span class="text-headline-sm font-bold text-electric-cyan">30 Minutos</span>
               </div>
-              <button class="w-full bg-electric-cyan text-navy-deep py-4 rounded-lg font-label-bold text-label-bold hover:scale-[1.02] transition-transform">Llamar Ahora</button>
+              <a href={phoneHref} class="block w-full text-center bg-electric-cyan text-navy-deep py-4 rounded-lg font-label-bold text-label-bold hover:scale-[1.02] transition-transform press">Llamar Ahora</a>
             </div>
           </div>
           <!-- Preventive Maintenance -->
           <div class="md:col-span-6 bg-white rounded-xl p-8 md:p-12 ambient-shadow border border-transparent hover:border-electric-cyan transition-all duration-500 hover-lift">
             <span class="material-symbols-outlined text-primary text-4xl mb-4">analytics</span>
             <h3 class="font-headline-sm text-headline-sm text-primary mb-4">Mantenimiento Preventivo</h3>
-            <p class="text-on-surface-variant font-body-md mb-8">Planes personalizados basados en el tráfico y uso de su edificio para evitar paradas no programadas.</p>
+            <p class="text-on-surface-variant font-body-md mb-8">Mantenimiento personalizado basado en el tráfico y uso de su edificio para evitar paradas no programadas.</p>
             <div class="grid grid-cols-2 gap-4 mb-8">
               <div class="p-4 bg-surface-container-low rounded-lg">
                 <span class="block font-label-bold text-label-sm text-on-surface-variant">Reducción de Fallas</span>
@@ -116,7 +119,7 @@ const processImg = "/images/servicios-proceso.webp";
                 <span class="text-headline-sm font-bold text-primary">+15 Años</span>
               </div>
             </div>
-            <button class="text-navy-deep font-label-bold text-label-bold flex items-center gap-2">Ver Planes <span class="material-symbols-outlined text-sm">chevron_right</span></button>
+            <a href="/cotizacion/" class="text-navy-deep font-label-bold text-label-bold flex items-center gap-2 hover:translate-x-1 transition-transform">Cotizar <span class="material-symbols-outlined text-sm">chevron_right</span></a>
           </div>
           <!-- Modernization -->
           <div class="md:col-span-6 group relative bg-white rounded-xl overflow-hidden ambient-shadow border border-transparent hover:border-electric-cyan transition-all duration-500">
