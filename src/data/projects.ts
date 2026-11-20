@@ -23,7 +23,7 @@ export interface Project {
 }
 
 const modules = import.meta.glob<{ default: ImageMetadata }>(
-  "../assets/projects/*/*.jpg",
+  "../assets/projects/*/*.webp",
   { eager: true },
 );
 
